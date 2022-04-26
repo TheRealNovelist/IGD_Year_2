@@ -1,0 +1,133 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public enum FloorLayer
+{
+    None = 0,
+    Up = 1,
+    Down = -1
+}
+
+/// <summary>
+/// Manage one grid floor of the hotel.
+/// </summary>
+public class Floor : MonoBehaviour
+{
+    private FloorManager _floorManager;
+
+    [SerializeField] private int _floorId = 0;
+
+    [SerializeField] private GameObject cellPrefab;
+    [SerializeField] private GameObject corridorPrefab;
+
+    [SerializeField] private List<Cell> allCells; //Storing all reference for activating grid
+
+    public GameObject allRooms;
+
+    private void Awake()
+    {
+        FloorManager.OnFloorChange += OnFloorSwap;
+    }
+
+    public void InitFloor(FloorManager floorManager, int floorId, int floorLength = 6)
+    {
+        _floorId = floorId;
+        _floorManager = floorManager;
+
+        GenerateFloorContent(floorLength);
+    }
+
+    private void GenerateFloorContent(int floorLength)
+    {
+        Transform floorTransform = transform;
+        Vector3 floorPosition = floorTransform.position;
+        
+        GameObject upperLayer = new GameObject("Upper Cell Layer")  { transform = { position = floorPosition, parent = floorTransform}};
+        GameObject corridorLayer = new GameObject("Corridor Layer") { transform = { position = floorPosition, parent = floorTransform}};
+        GameObject lowerLayer = new GameObject("Lower Cell Layer")  { transform = { position = floorPosition, parent = floorTransform}};
+
+        allRooms = new GameObject("All Rooms") { transform = { position = floorPosition, parent = floorTransform}};
+        
+        float spawnOffset = floorPosition.y;
+        
+        for (int i = 0; i < floorLength; i++)
+        {
+            GenerateCorridor(i, 0, corridorLayer, spawnOffset);
+            GenerateCell(i, 1, upperLayer, spawnOffset);
+            GenerateCell(i, -1, lowerLayer, spawnOffset);
+        }
+    }
+
+    private void GenerateCorridor(int x, int y, GameObject parentObj = null, float spawnOffset = 0f)
+    {
+        if (!corridorPrefab)
+        {
+            Debug.Log("FloorScript: Please put in the appropriate CORRIDOR PREFAB");
+            Debug.Break();
+        }
+        
+        GameObject newCorridor = Instantiate(corridorPrefab, new Vector3 (x, y + spawnOffset, 0), Quaternion.identity);
+        newCorridor.name = "Corridor at " + "(" + x + ", " + y + ")";
+
+        //Check if a parent object is assigned, make this a child of that object
+        if (parentObj != null)
+        {
+            newCorridor.transform.parent = parentObj.transform;
+        }
+    }
+
+    private void GenerateCell(int x, int y, GameObject parentObj = null, float spawnOffset = 0f)
+    {
+        if (!cellPrefab)
+        {
+            Debug.Log("FloorScript: Please put in the appropriate CELL PREFAB");
+            Debug.Break();
+        }
+
+        if (!cellPrefab.GetComponent<Cell>())
+        {
+            Debug.Log("FloorScript: CELL PREFAB do not have Cell script");
+            Debug.Break();
+        }
+
+        GameObject newCell = Instantiate(cellPrefab, new Vector3(x, y + spawnOffset, 0), Quaternion.identity);
+        Cell cellScript = newCell.GetComponent<Cell>();
+
+        cellScript.InitCell(x, (FloorLayer)y, this);
+
+        newCell.name = "Buildable Cell at " + "(" + x + ", " + y + ")";
+
+        allCells.Add(cellScript);
+        cellScript.SetCellActive(BuildingManager.IsBuildMode);
+
+        //Check if a parent object is assigned, make this a child of that object
+        if (parentObj != null)
+        {
+            newCell.transform.parent = parentObj.transform;
+        }
+    }
+
+    public void SetGridActive (bool active)
+    {
+        foreach (Cell cell in allCells)
+        {
+            cell.SetCellActive(active);
+        }
+    }   
+
+    public void OnFloorSwap(Floor floor)
+    {
+        if (BuildingManager.IsBuildMode)
+        {
+            if (floor != this)
+            {
+                SetGridActive(false);
+            }
+            else
+            {
+                SetGridActive(true);
+            }
+        }
+    }
+}
