@@ -25,11 +25,6 @@ public class Floor : MonoBehaviour
 
     public GameObject allRooms;
 
-    private void Awake()
-    {
-        FloorManager.OnFloorChange += OnFloorSwap;
-    }
-
     public void InitFloor(FloorManager floorManager, int floorId, int floorLength = 6)
     {
         _floorId = floorId;
@@ -113,21 +108,6 @@ public class Floor : MonoBehaviour
         foreach (Cell cell in allCells)
         {
             cell.SetCellActive(active);
-        }
-    }   
-
-    public void OnFloorSwap(Floor floor)
-    {
-        if (BuildingManager.IsBuildMode)
-        {
-            if (floor != this)
-            {
-                SetGridActive(false);
-            }
-            else
-            {
-                SetGridActive(true);
-            }
         }
     }
 }

@@ -28,8 +28,8 @@ public class CameraControl : MonoBehaviour
         if (!cineCam)
             cineCam = GetComponent<CinemachineVirtualCamera>();
 
-        if (!confiner)
-            confiner = cineCam.GetComponent<CinemachineConfiner>().m_BoundingShape2D;
+        //if (!confiner)
+           //confiner = cineCam.GetComponent<CinemachineConfiner>().m_BoundingShape2D;
     }
 
     // Update is called once per frame

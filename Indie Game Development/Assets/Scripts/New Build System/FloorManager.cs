@@ -10,10 +10,10 @@ public class FloorManager : MonoBehaviour
     public int maxFloorCount = 5;
     public float distanceBetweenFloors = 5f;
     public float floorSwapTime = 2f;
-    
-    public GameObject floorPrefab;
-    
-    public int currentFloorIndex = 0;
+
+    [SerializeField] private GameObject floorPrefab;
+
+    private int _currentFloorIndex = 0;
     
     //Private variables
     private bool _isSwapping = false;
@@ -23,13 +23,15 @@ public class FloorManager : MonoBehaviour
 
     public Floor currentFloor;
 
+    public List<GameObject> swapButton;
+
     public static event Action<Floor> OnFloorChange;
 
     private void Start()
     {
         _floorStorage = new GameObject("All Floors") { transform = { parent = transform } };
         allFloors = new List<Floor>();
-        currentFloor = SpawnFloor(6, new Vector3(0, 0, 0));
+        currentFloor = SpawnFloor(3, new Vector3(0, 0, 0));
     }
 
     private Floor SpawnFloor(int floorLength, Vector3 originPoint, bool swapOnSpawn = false)
@@ -71,17 +73,17 @@ public class FloorManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E) && allFloors.Count < maxFloorCount)
         {
-            SpawnFloor(7, new Vector3(0, _floorStorage.transform.position.y + (distanceBetweenFloors * allFloors.Count), 0), true);
+            SpawnFloor(5, new Vector3(0, _floorStorage.transform.position.y + (distanceBetweenFloors * allFloors.Count), 0), true);
         }
 
         if (Input.GetKeyDown(KeyCode.S))
         {
-            SwapFloor(currentFloorIndex - 1);
+            SwapFloor(_currentFloorIndex - 1);
         }
 
         if (Input.GetKeyDown(KeyCode.W))
         {
-            SwapFloor(currentFloorIndex + 1);
+            SwapFloor(_currentFloorIndex + 1);
         }
 
         if (Input.GetKeyDown(KeyCode.A))
@@ -96,39 +98,74 @@ public class FloorManager : MonoBehaviour
         //Check if the new floor is valid
         if (newFloor < 0 || newFloor >= allFloors.Count)
         {
-            Debug.Log("FloorManager: Floor " + newFloor + " is not valid");
+            Debug.Log("FloorManager.SwapFloor: Floor " + newFloor + " is not valid");
             return;
+        }
+
+        if (newFloor == _currentFloorIndex)
+        {
+            Debug.Log("FloorManager.SwapFloor: Target floor is current floor!");
         }
         
         //Calculate distance to move the floors
-        float distanceToMove = (currentFloorIndex - newFloor) * distanceBetweenFloors;
+        float distanceToMove = (_currentFloorIndex - newFloor) * distanceBetweenFloors;
         float newYPos = _floorStorage.transform.position.y + distanceToMove;
 
+        foreach (GameObject button in swapButton)
+        {
+            if (button)
+            {
+                button.SetActive(false);
+            }
+        }
+        
         //Avoid overlapping tween
         if (!_isSwapping)
         {
+            
+            
             _isSwapping = true;
             _floorStorage.transform.DOMoveY(newYPos, floorSwapTime).OnComplete(() => StopSwapping(newFloor));
         }
 
+        if (BuildingManager.IsBuildMode)
+        {
+            currentFloor.SetGridActive(false);
+        }
+        
         currentFloor = allFloors[newFloor];
         OnFloorChange?.Invoke(currentFloor);
+    }
+
+    public void IncrementFloor(int increment)
+    {
+        SwapFloor(_currentFloorIndex + increment);
     }
 
     //Callback for when swapping tween is completed
     private void StopSwapping(int newFloor)
     {
         _isSwapping = false;
-        currentFloorIndex = newFloor;
+        _currentFloorIndex = newFloor;
+        if (BuildingManager.IsBuildMode)
+        {
+            currentFloor.SetGridActive(true);
+        }
+        
+        foreach (GameObject button in swapButton)
+        {
+            if (button)
+            {
+                button.SetActive(true);
+            }
+        }
     }
 
     private void SetFloorGridActive(bool active)
     {
         //Avoid grid turning on if the floor is changing
-        if (!_isSwapping)
-        {
-            currentFloor.SetGridActive(active);
-            BuildingManager.IsBuildMode = active;
-        }
+        if (_isSwapping) return;
+        currentFloor.SetGridActive(active);
+        BuildingManager.IsBuildMode = active;
     }
 }

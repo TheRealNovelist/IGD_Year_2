@@ -18,6 +18,7 @@ public class RoomPrefabs
 public class BuildingManager : MonoBehaviour
 {
     public static bool IsBuildMode = false;
+    public static bool IsDestroyMode = false;
 
     private FloorManager _floorManager;
 
@@ -26,11 +27,11 @@ public class BuildingManager : MonoBehaviour
     [SerializeField] private List<Cell> allCellSelected;
     [SerializeField] private FloorLayer currentLayerSelected;
 
-    private RoomPrefabs selectedRoomPrefab;
+    private RoomPrefabs _selectedRoomPrefab;
 
     private void Awake()
     {
-        selectedRoomPrefab ??= allRoomPrefabs[0];
+        _selectedRoomPrefab ??= allRoomPrefabs[0];
         _floorManager ??= GameObject.Find("_FloorManager").GetComponent<FloorManager>();
     }
 
@@ -38,11 +39,11 @@ public class BuildingManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            selectedRoomPrefab = GetRoomPrefab("Single");
+            _selectedRoomPrefab = GetRoomPrefab("Single");
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            selectedRoomPrefab = GetRoomPrefab("Quad");
+            _selectedRoomPrefab = GetRoomPrefab("Quad");
         }
 
     }
@@ -127,12 +128,12 @@ public class BuildingManager : MonoBehaviour
     private bool IsRoomSizeReached()
     {
         //Find out if the cell selected aligned with the amount of room size on x axis.
-        return allCellSelected.Count == selectedRoomPrefab.roomSize.x;
+        return allCellSelected.Count == (int)_selectedRoomPrefab.roomSize.x;
     }
 
     private void OnRoomSizeReached()
     {
-        SpawnRoom(selectedRoomPrefab, currentLayerSelected, allCellSelected);
+        SpawnRoom(_selectedRoomPrefab, currentLayerSelected, allCellSelected);
 
         //Call OnCellReleased to reset the selection variables.
         OnCellReleased();
