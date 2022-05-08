@@ -105,6 +105,7 @@ public class FloorManager : MonoBehaviour
         if (newFloor == _currentFloorIndex)
         {
             Debug.Log("FloorManager.SwapFloor: Target floor is current floor!");
+            return;
         }
         
         //Calculate distance to move the floors
@@ -122,8 +123,6 @@ public class FloorManager : MonoBehaviour
         //Avoid overlapping tween
         if (!_isSwapping)
         {
-            
-            
             _isSwapping = true;
             _floorStorage.transform.DOMoveY(newYPos, floorSwapTime).OnComplete(() => StopSwapping(newFloor));
         }
