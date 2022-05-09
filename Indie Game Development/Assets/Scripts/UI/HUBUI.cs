@@ -6,7 +6,7 @@ using TMPro;
 public class HUBUI : MonoBehaviour
 {
     private GameManager gameManager => FindObjectOfType<GameManager>();
-    [SerializeField] private BuildGrid grid => FindObjectOfType<BuildGrid>();
+    //[SerializeField] private BuildGrid grid => FindObjectOfType<BuildGrid>();
     [SerializeField] private Room_HUB room;
 
     [SerializeField] private GameObject panel;
@@ -17,8 +17,8 @@ public class HUBUI : MonoBehaviour
 
     private void Update()
     {
-        gridWidth.text = grid.Width.ToString();
-        gridHeight.text = grid.Height.ToString();
+        //gridWidth.text = grid.Width.ToString();
+        //gridHeight.text = grid.Height.ToString();
         
         if (room != null)
         {
@@ -28,14 +28,14 @@ public class HUBUI : MonoBehaviour
 
     public void OpenPanel(Room_HUB room)
     {
-        if (!BuildUI.IsBuildMenuActive())
-        {
-            gameManager.DismissAllPanel();
-
-            panel.SetActive(true);
-
-            PopulatePanel(room);
-        }
+        // if (!BuildUI.IsBuildMenuActive())
+        // {
+        //     gameManager.DismissAllPanel();
+        //
+        //     panel.SetActive(true);
+        //
+        //     PopulatePanel(room);
+        // }
     }
 
     public void PopulatePanel(Room_HUB room)

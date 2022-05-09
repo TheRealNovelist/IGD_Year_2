@@ -34,14 +34,14 @@ public class GuestroomUI : MonoBehaviour
 
     public void OpenPanel(Room_Guest room)
     {
-        if (!BuildUI.IsBuildMenuActive())
-        {
-            gameManager.DismissAllPanel();
-
-            panel.SetActive(true);
-
-            PopulatePanel(room);
-        }
+        // if (!BuildUI.IsBuildMenuActive())
+        // {
+        //     gameManager.DismissAllPanel();
+        //
+        //     panel.SetActive(true);
+        //
+        //     PopulatePanel(room);
+        // }
     }
 
     public void PopulatePanel(Room_Guest room)

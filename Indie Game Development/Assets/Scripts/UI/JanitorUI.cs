@@ -15,12 +15,12 @@ public class JanitorUI : MonoBehaviour
 
     public void OpenPanel()
     {
-        if (!BuildUI.IsBuildMenuActive())
-        {
-            gameManager.DismissAllPanel();
-
-            panel.SetActive(true);
-        }
+        // if (!BuildUI.IsBuildMenuActive())
+        // {
+        //     gameManager.DismissAllPanel();
+        //
+        //     panel.SetActive(true);
+        // }
     }
 
     private void Update()

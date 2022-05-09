@@ -10,7 +10,7 @@ public class Cell : MonoBehaviour
     public int index;
     public FloorLayer layer = FloorLayer.None;
 
-    private bool isCellOccupied;
+    private bool _isCellOccupied;
 
     private void Awake()
     {
@@ -28,7 +28,7 @@ public class Cell : MonoBehaviour
 
     public void SetCellActive(bool active)
     {
-        if (!isCellOccupied)
+        if (!_isCellOccupied)
         {
             gameObject.SetActive(active);
         }
@@ -37,12 +37,12 @@ public class Cell : MonoBehaviour
     public void OnCellBuilt()
     {
         SetCellActive(false);
-        isCellOccupied = true;
+        _isCellOccupied = true;
     }
 
     public void OnRoomDestroy()
     {
-        isCellOccupied = false;
+        _isCellOccupied = false;
         if (BuildingManager.IsBuildMode)
         {
             SetCellActive(true);

@@ -6,8 +6,6 @@ using System;
 public class Room_Janitor : Room_Framework
 {
     public static event Action OnMaxJanitorChanged;
-    public static event Action OnJanitorDeployed;
-    public static event Action OnFinishCleaning;
 
     private static int maxJanitor = 0;
     private static int deployedJanitor = 0;

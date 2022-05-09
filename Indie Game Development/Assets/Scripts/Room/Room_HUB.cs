@@ -8,7 +8,7 @@ public class Room_HUB : Room_Framework
     private GameManager gameManager => FindObjectOfType<GameManager>();
     private HUBUI hubUI => FindObjectOfType<HUBUI>();
 
-    private BuildGrid grid => GameObject.Find("_BuildGrid").GetComponent<BuildGrid>();
+    //private BuildGrid grid => GameObject.Find("_BuildGrid").GetComponent<BuildGrid>();
 
     [System.Serializable]
     public struct LevelSetting
@@ -41,7 +41,7 @@ public class Room_HUB : Room_Framework
                 HUBLevel++;
                 Debug.Log("HUB: Level Up!");
                 LevelSetting currentLevelSetting = levelSettings[HUBLevel];
-                grid.ChangeGridSize(currentLevelSetting.gridSize.x, currentLevelSetting.gridSize.y);
+                //grid.ChangeGridSize(currentLevelSetting.gridSize.x, currentLevelSetting.gridSize.y);
                 hubUI.PopulatePanel(this);
                 gameManager.ReputationManager.AddExperience(200);
             }
