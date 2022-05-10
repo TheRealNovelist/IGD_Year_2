@@ -160,7 +160,7 @@ public class FloorManager : MonoBehaviour
         }
     }
 
-    private void SetFloorGridActive(bool active)
+    public void SetFloorGridActive(bool active)
     {
         //Avoid grid turning on if the floor is changing
         if (_isSwapping) return;

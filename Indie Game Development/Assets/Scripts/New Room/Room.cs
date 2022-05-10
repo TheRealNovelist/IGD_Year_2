@@ -29,12 +29,4 @@ public class Room : MonoBehaviour
         }
     }
 
-    private void OnMouseDown()
-    {
-        foreach (Cell cell in cellsOccupied)
-        {
-            cell.OnRoomDestroy();
-        }
-        Destroy(this.gameObject, 0.1f);
-    }
 }

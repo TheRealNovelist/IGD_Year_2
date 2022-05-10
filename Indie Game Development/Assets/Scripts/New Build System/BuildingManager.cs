@@ -13,6 +13,27 @@ public class RoomPrefabs
     [Header("Prefabs")]
     public GameObject upPrefab;
     public GameObject downPrefab;
+
+    public void ValidatePrefabs()
+    {
+        if (upPrefab == null || downPrefab == null)
+        {
+            Debug.LogWarning("Warning: Prefabs is not yet added!");
+            Debug.Break();
+        }
+
+        if (upPrefab.GetComponent<Room>() == null || downPrefab.GetComponent<Room>() == null)
+        {
+            Debug.LogWarning("Warning: Prefabs does not have Room type script");
+            Debug.Break();
+        }
+
+        if (upPrefab.GetComponent<Room>().roomSize != roomSize || downPrefab.GetComponent<Room>().roomSize != roomSize)
+        {
+            Debug.LogWarning("Warning: Prefabs cell sizes are not compatible");
+            Debug.Break();
+        }
+    }
 }
 
 public class BuildingManager : MonoBehaviour
@@ -54,6 +75,8 @@ public class BuildingManager : MonoBehaviour
         {
             if (prefab.name == roomName)
             {
+                //Validate first if the prefab is ok to use.
+                prefab.ValidatePrefabs();
                 return prefab;
             }
         }

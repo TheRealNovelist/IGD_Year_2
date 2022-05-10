@@ -7,6 +7,8 @@ public class Cell : MonoBehaviour
     private Floor _floor;
     private BuildingManager _buildingManager;
 
+    public Vector2Int cellSize = new Vector2Int(1, 1);
+
     public int index;
     public FloorLayer layer = FloorLayer.None;
 
