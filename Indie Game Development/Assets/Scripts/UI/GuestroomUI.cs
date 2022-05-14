@@ -4,142 +4,145 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class GuestroomUI : MonoBehaviour
+namespace Obsolete
 {
-    public GameManager gameManager => FindObjectOfType<GameManager>();
-
-    public Room_Guest currentGuestRoom;
-
-    [SerializeField] private GameObject panel;
-
-    [Header("Guest Panel")]
-    [SerializeField] private GameObject guestRoomPanel;
-    [Space]
-    [SerializeField] private TextMeshProUGUI guestNameText;
-    [SerializeField] private TextMeshProUGUI guestCurrentActivityText;
-    [SerializeField] private TextMeshProUGUI guestPayoutText;
-    [Space]
-    [SerializeField] private TextMeshProUGUI guestCurrentStayTimeText;
-    [SerializeField] private Slider guestStayTimeSlider;
-
-    [Header("Room Limit and Janitor")]
-    [SerializeField] private TextMeshProUGUI roomLimitText;
-    [SerializeField] private TextMeshProUGUI janitorAmountText;
-    [SerializeField] private Button cleanRoomButton;
-    [Space]
-    [SerializeField] private Slider cleaningSlider;
-
-    [Header("Money")]
-    [SerializeField] private TextMeshProUGUI totalMoneyText;
-
-    public void OpenPanel(Room_Guest room)
+    public class GuestroomUI : MonoBehaviour
     {
-        // if (!BuildUI.IsBuildMenuActive())
-        // {
-        //     gameManager.DismissAllPanel();
-        //
-        //     panel.SetActive(true);
-        //
-        //     PopulatePanel(room);
-        // }
-    }
+        public GameManager gameManager => FindObjectOfType<GameManager>();
 
-    public void PopulatePanel(Room_Guest room)
-    {
-        guestRoomPanel.SetActive(true);
+        public Room_Guest currentGuestRoom;
 
-        currentGuestRoom = room;
+        [SerializeField] private GameObject panel;
 
-        guestNameText.text = room.currentGuestInRoom.name;
-        guestPayoutText.text = room.currentGuestInRoom.payout.ToString();
+        [Header("Guest Panel")]
+        [SerializeField] private GameObject guestRoomPanel;
+        [Space]
+        [SerializeField] private TextMeshProUGUI guestNameText;
+        [SerializeField] private TextMeshProUGUI guestCurrentActivityText;
+        [SerializeField] private TextMeshProUGUI guestPayoutText;
+        [Space]
+        [SerializeField] private TextMeshProUGUI guestCurrentStayTimeText;
+        [SerializeField] private Slider guestStayTimeSlider;
 
-        roomLimitText.text = room.GetRoomLimit().ToString();
-        totalMoneyText.text = room.storedMoney.ToString();
+        [Header("Room Limit and Janitor")]
+        [SerializeField] private TextMeshProUGUI roomLimitText;
+        [SerializeField] private TextMeshProUGUI janitorAmountText;
+        [SerializeField] private Button cleanRoomButton;
+        [Space]
+        [SerializeField] private Slider cleaningSlider;
 
-        if (currentGuestRoom.isRoomDisabled)
+        [Header("Money")]
+        [SerializeField] private TextMeshProUGUI totalMoneyText;
+
+        public void OpenPanel(Room_Guest room)
         {
-            DisableRoom();
-            if (!currentGuestRoom.isCleaning)
-            {
-                cleanRoomButton.gameObject.SetActive(true);
-                cleaningSlider.gameObject.SetActive(false);
-            }
-            else
-            {
-                cleanRoomButton.gameObject.SetActive(false);
-                cleaningSlider.gameObject.SetActive(true);
-            }
-        }
-    }
-
-    private void Update()
-    {
-        if (currentGuestRoom != null || guestRoomPanel.activeInHierarchy)
-        {
-            guestCurrentStayTimeText.text = Mathf.RoundToInt(currentGuestRoom.GetCurrentStayTime()).ToString();
-            guestStayTimeSlider.value = currentGuestRoom.GetNormalizedStayTime();
+            // if (!BuildUI.IsBuildMenuActive())
+            // {
+            //     gameManager.DismissAllPanel();
+            //
+            //     panel.SetActive(true);
+            //
+            //     PopulatePanel(room);
+            // }
         }
 
-        janitorAmountText.text = Room_Janitor.GetAvailableJanitor().ToString();
-
-        if (cleanRoomButton.gameObject.activeInHierarchy)
+        public void PopulatePanel(Room_Guest room)
         {
-            if (Room_Janitor.GetAvailableJanitor() <= 0 || !currentGuestRoom.isRoomDisabled)
+            guestRoomPanel.SetActive(true);
+
+            currentGuestRoom = room;
+
+            guestNameText.text = room.currentGuestInRoom.name;
+            guestPayoutText.text = room.currentGuestInRoom.payout.ToString();
+
+            roomLimitText.text = room.GetRoomLimit().ToString();
+            totalMoneyText.text = room.storedMoney.ToString();
+
+            if (currentGuestRoom.isRoomDisabled)
             {
-                cleanRoomButton.interactable = false;
-            }
-            else
-            {
-                cleanRoomButton.interactable = true;
+                DisableRoom();
+                if (!currentGuestRoom.isCleaning)
+                {
+                    cleanRoomButton.gameObject.SetActive(true);
+                    cleaningSlider.gameObject.SetActive(false);
+                }
+                else
+                {
+                    cleanRoomButton.gameObject.SetActive(false);
+                    cleaningSlider.gameObject.SetActive(true);
+                }
             }
         }
-    }
 
-    public void ClosePanel()
-    {
-        panel.SetActive(false);
-        currentGuestRoom = null;
-    }
-
-    public void CollectMoney()
-    {
-        gameManager.MoneyManager.AddMoney(currentGuestRoom.storedMoney);
-        currentGuestRoom.storedMoney = 0;
-        totalMoneyText.text = "0";
-    }
-
-    public void DestroyRoomButton()
-    {
-        currentGuestRoom.DestroyRoom();
-        currentGuestRoom = null;
-        ClosePanel();
-    }
-
-    public void DisableRoom()
-    {
-        guestRoomPanel.SetActive(false);
-    }
-
-    public void CleanRoom()
-    {
-        if (currentGuestRoom)
+        private void Update()
         {
-            currentGuestRoom.CleanRoom();
+            if (currentGuestRoom != null || guestRoomPanel.activeInHierarchy)
+            {
+                guestCurrentStayTimeText.text = Mathf.RoundToInt(currentGuestRoom.GetCurrentStayTime()).ToString();
+                guestStayTimeSlider.value = currentGuestRoom.GetNormalizedStayTime();
+            }
+
+            janitorAmountText.text = Room_Janitor.GetAvailableJanitor().ToString();
+
+            if (cleanRoomButton.gameObject.activeInHierarchy)
+            {
+                if (Room_Janitor.GetAvailableJanitor() <= 0 || !currentGuestRoom.isRoomDisabled)
+                {
+                    cleanRoomButton.interactable = false;
+                }
+                else
+                {
+                    cleanRoomButton.interactable = true;
+                }
+            }
         }
 
-        cleanRoomButton.gameObject.SetActive(false);
-        cleaningSlider.gameObject.SetActive(true);
-    }
+        public void ClosePanel()
+        {
+            panel.SetActive(false);
+            currentGuestRoom = null;
+        }
 
-    public void FinishCleaning()
-    {
-        cleanRoomButton.gameObject.SetActive(true);
-        cleaningSlider.gameObject.SetActive(false);
-        guestRoomPanel.SetActive(true);
-    }
+        public void CollectMoney()
+        {
+            gameManager.MoneyManager.AddMoney(currentGuestRoom.storedMoney);
+            currentGuestRoom.storedMoney = 0;
+            totalMoneyText.text = "0";
+        }
 
-    public void SetCleaningSlider(float value)
-    {
-        cleaningSlider.value = value;
+        public void DestroyRoomButton()
+        {
+            currentGuestRoom.DestroyRoom();
+            currentGuestRoom = null;
+            ClosePanel();
+        }
+
+        public void DisableRoom()
+        {
+            guestRoomPanel.SetActive(false);
+        }
+
+        public void CleanRoom()
+        {
+            if (currentGuestRoom)
+            {
+                currentGuestRoom.CleanRoom();
+            }
+
+            cleanRoomButton.gameObject.SetActive(false);
+            cleaningSlider.gameObject.SetActive(true);
+        }
+
+        public void FinishCleaning()
+        {
+            cleanRoomButton.gameObject.SetActive(true);
+            cleaningSlider.gameObject.SetActive(false);
+            guestRoomPanel.SetActive(true);
+        }
+
+        public void SetCleaningSlider(float value)
+        {
+            cleaningSlider.value = value;
+        }
     }
 }

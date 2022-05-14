@@ -5,6 +5,13 @@ using System.Linq;
 
 namespace Obsolete
 {
+    public struct OudatedGuest
+    {
+        public string name;
+        public float stayTime;
+        public int payout;
+    }
+
     [System.Serializable]
     public struct GuestroomRanges
     {
@@ -16,7 +23,7 @@ namespace Obsolete
     {
         private static readonly string[] guestNames = new[] { "Harry", "David", "Judah", "James", "Lenny", "Arthur", "Akira", "Manny" };
 
-        public Guest currentGuestInRoom;
+        public OudatedGuest currentGuestInRoom;
 
         public bool isRoomDisabled;
         public bool isCleaning;
