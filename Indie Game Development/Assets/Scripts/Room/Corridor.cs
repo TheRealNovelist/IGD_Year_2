@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Corridor : Room_Framework
+namespace Obsolete
 {
-    public void Reset()
+    public class Corridor : Room_Framework
     {
-        roomSize = new Vector2Int(1, 1);
-        buildType = BuildType.Corridor;
-        cost = 0;
+        public void Reset()
+        {
+            roomSize = new Vector2Int(1, 1);
+            buildType = BuildType.Corridor;
+            cost = 0;
+        }
     }
 }

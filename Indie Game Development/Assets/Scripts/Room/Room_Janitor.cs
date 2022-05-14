@@ -3,70 +3,73 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class Room_Janitor : Room_Framework
+namespace Obsolete
 {
-    public static event Action OnMaxJanitorChanged;
-
-    private static int maxJanitor = 0;
-    private static int deployedJanitor = 0;
-
-    private JanitorUI janitorUI;
-
-    private void Start()
+    public class Room_Janitor : Room_Framework
     {
-        if (!janitorUI)
-            janitorUI = FindObjectOfType<JanitorUI>();
-    }
+        public static event Action OnMaxJanitorChanged;
 
-    private void OnEnable()
-    {
-        maxJanitor++;
-        Debug.Log("Janitor Amount: " + maxJanitor);
-    }
+        private static int maxJanitor = 0;
+        private static int deployedJanitor = 0;
 
-    private void OnDisable()
-    {
-        if (maxJanitor > 0)
+        private JanitorUI janitorUI;
+
+        private void Start()
         {
-            maxJanitor--;
-        }    
-        Debug.Log("Janitor Amount: " + maxJanitor);
-    }
-
-    private void OnMouseDown()
-    {
-        janitorUI.OpenPanel();
-    }
-
-    public void ChangeMaxJanitorAmount(int amount)
-    {
-        maxJanitor += amount;
-        OnMaxJanitorChanged?.Invoke();
-    }
-
-    public static int GetMaxJanitorAmount()
-    {
-        return maxJanitor;
-    }
-
-    public static int GetAvailableJanitor()
-    {
-        return maxJanitor - deployedJanitor;
-    }
-
-    public static bool DeployJanitor()
-    {
-        if (deployedJanitor <= maxJanitor)
-        {
-            deployedJanitor++;
-            return true;
+            if (!janitorUI)
+                janitorUI = FindObjectOfType<JanitorUI>();
         }
 
-        return false;
-    }
+        private void OnEnable()
+        {
+            maxJanitor++;
+            Debug.Log("Janitor Amount: " + maxJanitor);
+        }
 
-    public static void RetrieveJanitor()
-    {
-        deployedJanitor--;
+        private void OnDisable()
+        {
+            if (maxJanitor > 0)
+            {
+                maxJanitor--;
+            }
+            Debug.Log("Janitor Amount: " + maxJanitor);
+        }
+
+        private void OnMouseDown()
+        {
+            janitorUI.OpenPanel();
+        }
+
+        public void ChangeMaxJanitorAmount(int amount)
+        {
+            maxJanitor += amount;
+            OnMaxJanitorChanged?.Invoke();
+        }
+
+        public static int GetMaxJanitorAmount()
+        {
+            return maxJanitor;
+        }
+
+        public static int GetAvailableJanitor()
+        {
+            return maxJanitor - deployedJanitor;
+        }
+
+        public static bool DeployJanitor()
+        {
+            if (deployedJanitor <= maxJanitor)
+            {
+                deployedJanitor++;
+                return true;
+            }
+
+            return false;
+        }
+
+        public static void RetrieveJanitor()
+        {
+            deployedJanitor--;
+        }
     }
 }
