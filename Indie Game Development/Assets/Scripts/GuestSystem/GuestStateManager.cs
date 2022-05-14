@@ -2,20 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Guest))]
+[RequireComponent(typeof(GuestBaseClass))]
 public class GuestStateManager : MonoBehaviour
 {
-    Guest guest;
+    GuestBaseClass GuestBaseClass;
+    
+    private GuestBaseState currentState;
 
-    GuestBaseState currentState;
+    #region States
+    
     GuestStartState StartState = new GuestStartState();
     GuestIdleState IdleState = new GuestIdleState();
     GuestRequestState RequestState = new GuestRequestState();
     GuestLeaveState LeaveState = new GuestLeaveState();
-
+    
+    #endregion
+    
     private void Awake()
     {
-        guest = GetComponent<Guest>();
+        GuestBaseClass = GetComponent<GuestBaseClass>();
     }
 
     private void Start()
