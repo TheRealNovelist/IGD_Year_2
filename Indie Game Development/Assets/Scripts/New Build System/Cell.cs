@@ -51,6 +51,7 @@ public class Cell : MonoBehaviour
         }
     }
 
+    #region Input Event
     public void OnMouseDown()
     {
         _buildingManager.OnFirstCellClick(this);
@@ -65,4 +66,6 @@ public class Cell : MonoBehaviour
     {
         _buildingManager.OnCellReleased();
     }
+    #endregion
+   
 }

@@ -2,7 +2,27 @@ using UnityEngine;
 
 public abstract class GuestBaseState
 {
-    public abstract void EnterState(GuestStateManager guest);
+    protected GuestBrain _guest;
+    protected GuestStateManager _state;
 
-    public abstract void UpdateState(GuestStateManager guest);
+    public GuestBaseState(GuestBrain guest, GuestStateManager state)
+    {
+        _guest = guest;
+        _state = state;
+    }
+    
+    public abstract void EnterState();
+
+    public abstract void UpdateState();
+
+    public abstract void ExitState();
+
+    public abstract void CheckSwitchState();
+    
+    protected void SwitchState(GuestBaseState state)
+    {
+        ExitState();
+        state.EnterState();
+        _guest.CurrentState = state;
+    }
 }

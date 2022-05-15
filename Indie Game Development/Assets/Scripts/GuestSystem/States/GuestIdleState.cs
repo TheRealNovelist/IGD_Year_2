@@ -2,12 +2,24 @@ using UnityEngine;
 
 public class GuestIdleState : GuestBaseState
 {
-    public override void EnterState(GuestStateManager guest)
+    public GuestIdleState(GuestBrain guest, GuestStateManager state) : base(guest, state) {}
+    
+    public override void EnterState()
     {
         
     }
 
-    public override void UpdateState(GuestStateManager guest)
+    public override void UpdateState()
+    {
+        
+    }
+
+    public override void ExitState()
+    {
+        
+    }
+
+    public override void CheckSwitchState()
     {
         
     }
