@@ -2,6 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Mood
+{
+    Angry,
+    Sad,
+    Normal,
+    Happy,
+    Satisfied
+}
+
 [CreateAssetMenu(fileName = "New Mood Settings", menuName = "Mood Settings")]
 public class MoodSettings : ScriptableObject
 {
@@ -49,7 +58,7 @@ public class MoodSettings : ScriptableObject
             }
         }
         
-        Debug.LogError("No");
+        Debug.LogError("Code shouldn't reach this point!");
         return MoodList[0];
     }
     

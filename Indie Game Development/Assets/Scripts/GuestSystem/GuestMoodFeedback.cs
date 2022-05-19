@@ -1,36 +1,35 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class GuestMoodFeedback : MonoBehaviour
 {
-    [SerializeField] private GuestMoodBehaviour guestMoodBehaviour;
-
     [SerializeField] private MoodSettings _moodSettings;
-    [SerializeField] private Image _moodIcon;
     
+    [Header("Textures")]
+    [SerializeField] private Image _moodIcon;
+
+    [SerializeField] private TextMeshProUGUI _moodText;
     [SerializeField] private Image _timerFill;
 
-    [SerializeField] private Color _normalColor;
-    [SerializeField] private Color _angryColor;
+    [Header("Color Settings")]
+    [SerializeField] private Color _normalColor = Color.green;
+    [SerializeField] private Color _angryColor = Color.red;
     
     void Awake()
     {
         _timerFill.color = _normalColor;
-        guestMoodBehaviour.OnMoodChanged += ChangeMoodTimer;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        UpdateCurrentFill();
-    }
-
-    void ChangeMoodTimer(Mood mood)
+    
+    public void ChangeMoodFeedback(Mood mood)
     {
         //_moodIcon.sprite = _moodSettings.GetMoodSprite(mood);
 
+        _moodText.text = mood.ToString();
+        
         switch (mood)
         {
             case Mood.Angry:
@@ -42,8 +41,8 @@ public class GuestMoodFeedback : MonoBehaviour
         }
     }
 
-    void UpdateCurrentFill()
+    public void UpdateCurrentFill(float amount)
     {
-        _timerFill.fillAmount = guestMoodBehaviour.GetMoodTimeNormalized();
+        _timerFill.fillAmount = amount;
     }
 }

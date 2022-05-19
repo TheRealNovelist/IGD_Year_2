@@ -15,14 +15,21 @@ public enum GuestroomSize
 
 public enum ServiceType
 {
-    
+    None,
+    Bathroom,
+    Restaurant
 }
 
 
 
 public class DataManager : MonoBehaviour
 {
-    private static List<GuestroomSize> unlockedGuestroomSizes;
-    
-    
+    private List<GuestroomSize> unlockedGuestroomSizes;
+    private List<ServiceType> unlockedServiceTypes;
+
+    public void Awake()
+    {
+        unlockedGuestroomSizes = new List<GuestroomSize>();
+        unlockedServiceTypes = new List<ServiceType>();
+    }
 }
