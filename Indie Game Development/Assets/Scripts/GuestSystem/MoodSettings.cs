@@ -11,7 +11,7 @@ public enum Mood
     Satisfied
 }
 
-[CreateAssetMenu(fileName = "New Mood Settings", menuName = "Settings/Mood Settings")]
+[CreateAssetMenu(fileName = "New Mood Settings", menuName = "Mood Settings")]
 public class MoodSettings : ScriptableObject
 {
     public List<MoodData> MoodList;

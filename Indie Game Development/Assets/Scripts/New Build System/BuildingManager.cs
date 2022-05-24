@@ -4,7 +4,37 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
+[System.Serializable]
+public class RoomPrefabs
+{
+    [Header("Basic Settings")]
+    public string name;
+    public Vector2 roomSize = new Vector2(1, 1);
+    [Header("Prefabs")]
+    public GameObject upPrefab;
+    public GameObject downPrefab;
 
+    public void ValidatePrefabs()
+    {
+        if (upPrefab == null || downPrefab == null)
+        {
+            Debug.LogWarning("Warning: Prefabs is not yet added!");
+            Debug.Break();
+        }
+
+        if (upPrefab.GetComponent<Room>() == null || downPrefab.GetComponent<Room>() == null)
+        {
+            Debug.LogWarning("Warning: Prefabs does not have Room type script");
+            Debug.Break();
+        }
+
+        if (upPrefab.GetComponent<Room>().roomSize != roomSize || downPrefab.GetComponent<Room>().roomSize != roomSize)
+        {
+            Debug.LogWarning("Warning: Prefabs cell sizes are not compatible");
+            Debug.Break();
+        }
+    }
+}
 
 public class BuildingManager : MonoBehaviour
 {
@@ -13,15 +43,16 @@ public class BuildingManager : MonoBehaviour
 
     private FloorManager _floorManager;
 
-    [SerializeField] private RoomSettings _roomSettings;
-    
-    private List<Cell> allCellSelected;
-    private FloorLayer currentLayerSelected;
+    [SerializeField] private List<RoomPrefabs> allRoomPrefabs;
 
-    private RoomPrefab _selectedRoomPrefab;
+    [SerializeField] private List<Cell> allCellSelected;
+    [SerializeField] private FloorLayer currentLayerSelected;
+
+    private RoomPrefabs _selectedRoomPrefab;
 
     private void Awake()
     {
+        _selectedRoomPrefab ??= allRoomPrefabs[0];
         _floorManager ??= GameObject.Find("_FloorManager").GetComponent<FloorManager>();
     }
 
@@ -29,16 +60,32 @@ public class BuildingManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            _selectedRoomPrefab = _roomSettings.GetRoomPrefab("Single");
+            _selectedRoomPrefab = GetRoomPrefab("Single");
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            _selectedRoomPrefab = _roomSettings.GetRoomPrefab("Quad")
+            _selectedRoomPrefab = GetRoomPrefab("Quad");
         }
 
     }
 
-    private void SpawnRoom(RoomPrefab roomPrefabs, FloorLayer layer, List<Cell> cellToOccupy)
+    private RoomPrefabs GetRoomPrefab(string roomName)
+    {
+        foreach (RoomPrefabs prefab in allRoomPrefabs)
+        {
+            if (prefab.name == roomName)
+            {
+                //Validate first if the prefab is ok to use.
+                prefab.ValidatePrefabs();
+                return prefab;
+            }
+        }
+
+        Debug.LogError("BuildingManager.GetRoomPrefab: Prefab " + roomName + " not found!");
+        return null;
+    }
+
+    private void SpawnRoom(RoomPrefabs roomPrefabs, FloorLayer layer, List<Cell> cellToOccupy)
     {
         if (roomPrefabs == null)
         {
@@ -101,13 +148,21 @@ public class BuildingManager : MonoBehaviour
         return smallestCell;
     }
 
+    private bool IsRoomSizeReached()
+    {
+        //Find out if the cell selected aligned with the amount of room size on x axis.
+        return allCellSelected.Count == (int)_selectedRoomPrefab.roomSize.x;
+    }
+
+    private void OnRoomSizeReached()
+    {
+        SpawnRoom(_selectedRoomPrefab, currentLayerSelected, allCellSelected);
+
+        //Call OnCellReleased to reset the selection variables.
+        OnCellReleased();
+    }
 
     #region Cell Interaction
-
-    public void SelectCell(Cell cell)
-    {
-
-    }
 
     public void OnFirstCellClick(Cell cell)
     {
@@ -115,6 +170,11 @@ public class BuildingManager : MonoBehaviour
         {
             allCellSelected.Add(cell);
             currentLayerSelected = cell.layer;
+        }
+
+        if (IsRoomSizeReached())
+        {
+            OnRoomSizeReached();
         }
     }
 
@@ -139,6 +199,11 @@ public class BuildingManager : MonoBehaviour
                 if (cell.index == selectedCell.index + 1 || cell.index == selectedCell.index - 1)
                 {
                     allCellSelected.Add(cell);
+                    if (IsRoomSizeReached())
+                    {
+                        OnRoomSizeReached();
+                    }
+                    return;
                 }
             }
         }

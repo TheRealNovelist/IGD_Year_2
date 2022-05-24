@@ -11,6 +11,13 @@ public class GuestBrain : MonoBehaviour
   
     private GuestState _currentState;
     private Mood _currentMood = Mood.Normal;
+    private bool isGuestInRoom = false;
+    
+    private GuestroomSize _preferredRoomSize;
+    private int _serviceAmount;
+    private Queue<ServiceType> serviceList;
+
+    private Room _currentRoom;
 
     public bool IsAnyTimerRunning { get; private set; }
 
@@ -18,11 +25,31 @@ public class GuestBrain : MonoBehaviour
 
     [SerializeField] private GuestIdleState IdleState;
 
-    public void InitGuest(Mood startingMood, int services)
+    public void InitGuest(Mood startingMood, GuestroomSize preferredSize, int services)
     {
         _currentMood = startingMood;
+        _preferredRoomSize = preferredSize;
+        _serviceAmount = services;
     }
 
+    public bool IsCheckingOut()
+    {
+        return serviceList.Count == 0;
+    }
+    
+    public void AssignRoom(Room room)
+    {
+        _currentRoom = room;
+        isGuestInRoom = true;
+        
+        SwitchState(IdleState);
+        
+        if (room.size == _preferredRoomSize)
+        {
+            ChangeMood(1);
+        }
+    }
+    
     #region Unity Methods
 
     private void Start()
