@@ -30,14 +30,7 @@ public class GuestIdleState : GuestState
 
         if (_currentIdleTime <= 0)
         {
-            if (guest.IsCheckingOut())
-            {
-                guest.SwitchState(CheckoutState);
-            }
-            else
-            {
-                guest.SwitchState(RequestingState);
-            }
+
         }
     }
 
