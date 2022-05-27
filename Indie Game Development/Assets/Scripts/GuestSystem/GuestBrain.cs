@@ -11,11 +11,8 @@ public class GuestBrain : MonoBehaviour
   
     private GuestState _currentState;
     private Mood _currentMood = Mood.Normal;
-    private bool isGuestInRoom = false;
     
     private GuestroomSize _preferredRoomSize;
-    private int _serviceAmount;
-    private Queue<ServiceType> serviceList;
 
     private Room _currentRoom;
 
@@ -29,18 +26,12 @@ public class GuestBrain : MonoBehaviour
     {
         _currentMood = startingMood;
         _preferredRoomSize = preferredSize;
-        _serviceAmount = services;
     }
 
-    public bool IsCheckingOut()
-    {
-        return serviceList.Count == 0;
-    }
     
     public void AssignRoom(Room room)
     {
         _currentRoom = room;
-        isGuestInRoom = true;
         
         SwitchState(IdleState);
         
@@ -51,7 +42,6 @@ public class GuestBrain : MonoBehaviour
     }
     
     #region Unity Methods
-
     private void Start()
     {
         StartStateMachine();
@@ -65,7 +55,6 @@ public class GuestBrain : MonoBehaviour
     #endregion
 
     #region Mood Methods
-
     public Mood GetCurrentMood()
     {
         return _currentMood;

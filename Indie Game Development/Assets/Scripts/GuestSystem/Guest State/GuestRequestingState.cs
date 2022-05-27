@@ -16,7 +16,6 @@ public class GuestRequestingState : GuestState
 
     private float _currentMoodTime;
     
-    
     public override void EnterState(GuestBrain guest)
     {
         //Feedback setup
