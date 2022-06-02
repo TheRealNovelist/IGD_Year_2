@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class GuestState : MonoBehaviour
 {
-    public abstract void EnterState(GuestBrain guest);
-    public abstract void UpdateState(GuestBrain guest);
-    public abstract void ExitState(GuestBrain guest);
+    public abstract void EnterState(Guest guest);
+    public abstract void UpdateState(Guest guest);
+    public abstract void ExitState(Guest guest);
 }

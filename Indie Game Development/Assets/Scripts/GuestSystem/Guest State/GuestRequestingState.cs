@@ -16,7 +16,7 @@ public class GuestRequestingState : GuestState
 
     private float _currentMoodTime;
     
-    public override void EnterState(GuestBrain guest)
+    public override void EnterState(Guest guest)
     {
         //Feedback setup
         _feedback.gameObject.SetActive(true);
@@ -29,7 +29,7 @@ public class GuestRequestingState : GuestState
         guest.OnMoodChanged += OnMoodChange;
     }
 
-    public override void UpdateState(GuestBrain guest)
+    public override void UpdateState(Guest guest)
     {
         if (!guest.IsAnyTimerRunning) 
             return;
@@ -53,7 +53,7 @@ public class GuestRequestingState : GuestState
         }
     }
 
-    public override void ExitState(GuestBrain guest)
+    public override void ExitState(Guest guest)
     {
         guest.OnMoodChanged -= OnMoodChange;
 

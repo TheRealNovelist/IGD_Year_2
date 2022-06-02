@@ -256,7 +256,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80be1e06662575c4fbe80c2ed8301e37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingState: {fileID: 9020822225914198223}
+  startingState: {fileID: 890588017260758976}
+  IdleState: {fileID: 966644705362629066}
 --- !u!1 &3879274403693418005
 GameObject:
   m_ObjectHideFlags: 0

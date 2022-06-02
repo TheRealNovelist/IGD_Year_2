@@ -7,14 +7,4 @@ public class GuestGenerator : MonoBehaviour
 {
     
     
-    private void Start()
-    {
-        
-    }
-
-    private void Update()
-    {
-        
-    }
-    
 } 

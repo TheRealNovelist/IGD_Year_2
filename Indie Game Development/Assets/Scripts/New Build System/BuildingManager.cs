@@ -4,38 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[System.Serializable]
-public class RoomPrefabs
-{
-    [Header("Basic Settings")]
-    public string name;
-    public Vector2 roomSize = new Vector2(1, 1);
-    [Header("Prefabs")]
-    public GameObject upPrefab;
-    public GameObject downPrefab;
-
-    public void ValidatePrefabs()
-    {
-        if (upPrefab == null || downPrefab == null)
-        {
-            Debug.LogWarning("Warning: Prefabs is not yet added!");
-            Debug.Break();
-        }
-
-        if (upPrefab.GetComponent<Room>() == null || downPrefab.GetComponent<Room>() == null)
-        {
-            Debug.LogWarning("Warning: Prefabs does not have Room type script");
-            Debug.Break();
-        }
-
-        if (upPrefab.GetComponent<Room>().roomSize != roomSize || downPrefab.GetComponent<Room>().roomSize != roomSize)
-        {
-            Debug.LogWarning("Warning: Prefabs cell sizes are not compatible");
-            Debug.Break();
-        }
-    }
-}
-
 public class BuildingManager : MonoBehaviour
 {
     public static bool IsBuildMode = false;
@@ -43,12 +11,12 @@ public class BuildingManager : MonoBehaviour
 
     private FloorManager _floorManager;
 
-    [SerializeField] private List<RoomPrefabs> allRoomPrefabs;
+    [SerializeField] private List<GameObject> allRoomPrefabs;
 
     [SerializeField] private List<Cell> allCellSelected;
     [SerializeField] private FloorLayer currentLayerSelected;
 
-    private RoomPrefabs _selectedRoomPrefab;
+    private GameObject _selectedRoomPrefab;
 
     private void Awake()
     {
@@ -69,14 +37,13 @@ public class BuildingManager : MonoBehaviour
 
     }
 
-    private RoomPrefabs GetRoomPrefab(string roomName)
+    private GameObject GetRoomPrefab(string roomName)
     {
-        foreach (RoomPrefabs prefab in allRoomPrefabs)
+        foreach (GameObject prefab in allRoomPrefabs)
         {
             if (prefab.name == roomName)
             {
                 //Validate first if the prefab is ok to use.
-                prefab.ValidatePrefabs();
                 return prefab;
             }
         }
@@ -85,28 +52,25 @@ public class BuildingManager : MonoBehaviour
         return null;
     }
 
-    private void SpawnRoom(RoomPrefabs roomPrefabs, FloorLayer layer, List<Cell> cellToOccupy)
+    private void SpawnRoom(GameObject roomPrefab, FloorLayer layer, List<Cell> cellToOccupy)
     {
-        if (roomPrefabs == null)
+        if (roomPrefab == null)
         {
             Debug.Log("BuildingManager.SpawnRoom: The Room Prefab to build has not been selected");
             return;
         }
 
-        //Temporary default
-        GameObject roomToSpawn;
+        RoomConstructor constructor = roomPrefab.GetComponent<RoomConstructor>();
         Vector2 roomSpawnPoint = GetSmallestCell(cellToOccupy).transform.position;
 
         switch (layer)
         {
             case FloorLayer.Up:
-                roomToSpawn = roomPrefabs.upPrefab;
-                roomSpawnPoint += roomPrefabs.roomSize * 0.5f;
+                roomSpawnPoint += (Vector2)constructor.roomSize * 0.5f;
                 break;
             case FloorLayer.Down:
-                roomToSpawn = roomPrefabs.downPrefab;
                 roomSpawnPoint += new Vector2(0, 1);
-                roomSpawnPoint = new Vector2(roomSpawnPoint.x + roomPrefabs.roomSize.x * 0.5f, roomSpawnPoint.y - roomPrefabs.roomSize.y * 0.5f);
+                roomSpawnPoint = new Vector2(roomSpawnPoint.x + constructor.roomSize.x * 0.5f, roomSpawnPoint.y - constructor.roomSize.y * 0.5f);
                 break;
             case FloorLayer.None:
                 Debug.LogError("BuildingManager.SpawnRoom: Illegal layer detected");
@@ -116,25 +80,9 @@ public class BuildingManager : MonoBehaviour
                 throw new NullReferenceException("BuildingManager.SpawnRoom: Code directed to an illegal route");
         }
 
-        GameObject newRoom = Instantiate(roomToSpawn, roomSpawnPoint, Quaternion.identity);
-
-        SetUpRoom(newRoom, roomPrefabs.name, cellToOccupy);
-    }
-    
-    private void SetUpRoom(GameObject roomObject, string roomName, List<Cell> cellToOccupy)
-    {
-        roomObject.name = roomName;
-        roomObject.transform.parent = _floorManager.currentFloor.allRooms.transform;
-
-        Room room = roomObject.GetComponent<Room>();
-        if (!room)
-        {
-            Debug.LogError("BuildingManager.SetUpRoom: Object Instantiated did not have script of type Room");
-            Debug.Break();
-            return;
-        }
-
-        room.OnRoomBuilt(cellToOccupy);
+        GameObject newRoom = Instantiate(roomPrefab, roomSpawnPoint, Quaternion.identity);
+        newRoom.transform.parent = _floorManager.currentFloor.allRooms.transform;
+        newRoom.GetComponent<RoomConstructor>().OnRoomBuilt(cellToOccupy, layer);
     }
 
     private Cell GetSmallestCell(List<Cell> cells)
@@ -151,7 +99,7 @@ public class BuildingManager : MonoBehaviour
     private bool IsRoomSizeReached()
     {
         //Find out if the cell selected aligned with the amount of room size on x axis.
-        return allCellSelected.Count == (int)_selectedRoomPrefab.roomSize.x;
+        return allCellSelected.Count == (int)_selectedRoomPrefab.GetComponent<RoomConstructor>().roomSize.x;
     }
 
     private void OnRoomSizeReached()
@@ -168,13 +116,12 @@ public class BuildingManager : MonoBehaviour
     {
         if (allCellSelected.Count == 0)
         {
-            allCellSelected.Add(cell);
             currentLayerSelected = cell.layer;
-        }
-
-        if (IsRoomSizeReached())
-        {
-            OnRoomSizeReached();
+            allCellSelected.Add(cell);
+            if (IsRoomSizeReached())
+            {
+                OnRoomSizeReached();
+            }
         }
     }
 

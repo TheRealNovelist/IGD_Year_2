@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class GuestEnterState : GuestState
 {
-    public override void EnterState(GuestBrain guest)
+    public override void EnterState(Guest guest)
     {
         
     }
 
-    public override void UpdateState(GuestBrain guest)
+    public override void UpdateState(Guest guest)
     {
         
     }
 
-    public override void ExitState(GuestBrain guest)
+    public override void ExitState(Guest guest)
     {
         
     }

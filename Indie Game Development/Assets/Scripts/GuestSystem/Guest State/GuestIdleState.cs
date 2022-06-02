@@ -15,13 +15,13 @@ public class GuestIdleState : GuestState
 
     private float _currentIdleTime;
     
-    public override void EnterState(GuestBrain guest)
+    public override void EnterState(Guest guest)
     {
         guest.SetAnyTimerActive(true);
         RestartIdleTimer();
     }
 
-    public override void UpdateState(GuestBrain guest)
+    public override void UpdateState(Guest guest)
     {
         if (!guest.IsAnyTimerRunning) 
             return;
@@ -41,7 +41,7 @@ public class GuestIdleState : GuestState
         }
     }
 
-    public override void ExitState(GuestBrain guest)
+    public override void ExitState(Guest guest)
     {
         guest.SetAnyTimerActive(false);
     }
