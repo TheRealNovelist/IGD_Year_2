@@ -8,15 +8,15 @@ public class BuildingManager : MonoBehaviour
 {
     public static bool IsBuildMode = false;
     public static bool IsDestroyMode = false;
-
-    private FloorManager _floorManager;
-
+    
     [SerializeField] private List<GameObject> allRoomPrefabs;
 
-    [SerializeField] private List<Cell> allCellSelected;
-    [SerializeField] private FloorLayer currentLayerSelected;
-
     private GameObject _selectedRoomPrefab;
+    
+    private FloorManager _floorManager;
+    private List<Cell> _allCellSelected = new List<Cell>();
+    private FloorLayer _currentLayerSelected;
+
 
     private void Awake()
     {
@@ -99,12 +99,12 @@ public class BuildingManager : MonoBehaviour
     private bool IsRoomSizeReached()
     {
         //Find out if the cell selected aligned with the amount of room size on x axis.
-        return allCellSelected.Count == (int)_selectedRoomPrefab.GetComponent<RoomConstructor>().roomSize.x;
+        return _allCellSelected.Count == (int)_selectedRoomPrefab.GetComponent<RoomConstructor>().roomSize.x;
     }
 
     private void OnRoomSizeReached()
     {
-        SpawnRoom(_selectedRoomPrefab, currentLayerSelected, allCellSelected);
+        SpawnRoom(_selectedRoomPrefab, _currentLayerSelected, _allCellSelected);
 
         //Call OnCellReleased to reset the selection variables.
         OnCellReleased();
@@ -114,10 +114,10 @@ public class BuildingManager : MonoBehaviour
 
     public void OnFirstCellClick(Cell cell)
     {
-        if (allCellSelected.Count == 0)
+        if (_allCellSelected.Count == 0)
         {
-            currentLayerSelected = cell.layer;
-            allCellSelected.Add(cell);
+            _currentLayerSelected = cell.layer;
+            _allCellSelected.Add(cell);
             if (IsRoomSizeReached())
             {
                 OnRoomSizeReached();
@@ -127,15 +127,15 @@ public class BuildingManager : MonoBehaviour
 
     public void OnAdjacentCellClick(Cell cell)
     {
-        if (allCellSelected.Count > 0)
+        if (_allCellSelected.Count > 0)
         {
-            if (allCellSelected.Contains(cell))
+            if (_allCellSelected.Contains(cell))
             {
                 Debug.Log("Cell exist!");
                 return;
             }
 
-            foreach (Cell selectedCell in allCellSelected)
+            foreach (Cell selectedCell in _allCellSelected)
             {
                 if (selectedCell.layer != cell.layer)
                 {
@@ -145,7 +145,7 @@ public class BuildingManager : MonoBehaviour
 
                 if (cell.index == selectedCell.index + 1 || cell.index == selectedCell.index - 1)
                 {
-                    allCellSelected.Add(cell);
+                    _allCellSelected.Add(cell);
                     if (IsRoomSizeReached())
                     {
                         OnRoomSizeReached();
@@ -158,8 +158,8 @@ public class BuildingManager : MonoBehaviour
 
     public void OnCellReleased()
     {
-        allCellSelected.Clear();
-        currentLayerSelected = FloorLayer.None;
+        _allCellSelected.Clear();
+        _currentLayerSelected = FloorLayer.None;
     }
     #endregion
 }

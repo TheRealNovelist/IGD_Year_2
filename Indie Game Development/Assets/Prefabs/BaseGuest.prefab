@@ -144,7 +144,7 @@ GameObject:
   m_Component:
   - component: {fileID: 262930877203259137}
   m_Layer: 0
-  m_Name: States
+  m_Name: State Machine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -222,6 +222,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3879274403628441333}
   - component: {fileID: 4201859112398416409}
+  - component: {fileID: 871378372586295582}
+  - component: {fileID: 8769499801488397868}
   m_Layer: 0
   m_Name: BaseGuest
   m_TagString: Untagged
@@ -241,6 +243,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 262930877203259137}
+  - {fileID: 3879274404343328993}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -256,8 +259,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80be1e06662575c4fbe80c2ed8301e37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingState: {fileID: 890588017260758976}
-  IdleState: {fileID: 966644705362629066}
+  startingState: {fileID: 9020822225914198223}
+--- !u!114 &871378372586295582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3879274403628441336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d6c796ee9570c644bd49ba4d7a758f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _settings: {fileID: 0}
+  _feedback: {fileID: 7371776896651447578}
+  _maxTime: 5
+--- !u!114 &8769499801488397868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3879274403628441336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 080fd636faa2c6d40bcb59eb899080cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3879274403693418005
 GameObject:
   m_ObjectHideFlags: 0
@@ -346,9 +375,8 @@ GameObject:
   - component: {fileID: 3879274404343328994}
   - component: {fileID: 3879274404343328995}
   - component: {fileID: 3879274404343328992}
-  - component: {fileID: 464514718543019880}
   m_Layer: 5
-  m_Name: Mood Timer
+  m_Name: Guest Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -366,8 +394,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8363396985545859371}
-  m_Father: {fileID: 475879512243549441}
-  m_RootOrder: 0
+  m_Father: {fileID: 3879274403628441333}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -435,24 +463,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &464514718543019880
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3879274404343328998}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76b506f9004b21045906b143fce19734, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _moodSettings: {fileID: 0}
-  _moodIcon: {fileID: 7777800831921382208}
-  _moodText: {fileID: 933301042}
-  _timerFill: {fileID: 3879274403693418004}
-  _normalColor: {r: 0, g: 1, b: 0, a: 1}
-  _angryColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &4426124784370835299
 GameObject:
   m_ObjectHideFlags: 0
@@ -555,8 +565,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 3879274404343328993}
+  m_Children: []
   m_Father: {fileID: 262930877203259137}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -574,8 +583,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LeaveState: {fileID: 1829438843839201585}
   IdleState: {fileID: 966644705362629066}
-  _feedback: {fileID: 464514718543019880}
-  maxMoodTime: 5
+  _moodBehaviour: {fileID: 871378372586295582}
 --- !u!1 &7064444067534059250
 GameObject:
   m_ObjectHideFlags: 0
@@ -585,6 +593,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8363396985545859371}
+  - component: {fileID: 7371776896651447578}
   m_Layer: 5
   m_Name: Timer
   m_TagString: Untagged
@@ -612,6 +621,24 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0.87}
   m_SizeDelta: {x: 0.5, y: 0.5}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &7371776896651447578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7064444067534059250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76b506f9004b21045906b143fce19734, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _moodSettings: {fileID: 0}
+  _moodIcon: {fileID: 7777800831921382208}
+  _moodText: {fileID: 933301042}
+  _timerFill: {fileID: 3879274403693418004}
+  _normalColor: {r: 0, g: 1, b: 0, a: 1}
+  _angryColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &7065314165426853066
 GameObject:
   m_ObjectHideFlags: 0
@@ -820,4 +847,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RequestingState: {fileID: 9020822225914198223}
   CheckoutState: {fileID: 0}
-  _maxIdleTime: 0

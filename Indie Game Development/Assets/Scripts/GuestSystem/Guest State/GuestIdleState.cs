@@ -7,47 +7,21 @@ public class GuestIdleState : GuestState
     [Header("State to Transition")]
     [SerializeField] private GuestRequestingState RequestingState;
     [SerializeField] private GuestCheckoutState CheckoutState;
-    
-    //[Header("Component")] 
-    
-    [Header("Settings")]
-    [SerializeField] private float _maxIdleTime;
 
-    private float _currentIdleTime;
-    
-    public override void EnterState(Guest guest)
+    public override void EnterState()
     {
-        guest.SetAnyTimerActive(true);
-        RestartIdleTimer();
+
     }
 
-    public override void UpdateState(Guest guest)
+    public override void UpdateState()
     {
-        if (!guest.IsAnyTimerRunning) 
-            return;
-        
-        _currentIdleTime -= Time.deltaTime;
 
-        if (_currentIdleTime <= 0)
-        {
-            //if (guest.IsCheckingOut())
-            //{
-            //    guest.SwitchState(CheckoutState);
-            //}
-            //else
-            //{
-            //    guest.SwitchState(RequestingState);
-            //}
-        }
     }
 
-    public override void ExitState(Guest guest)
+    public override void ExitState()
     {
-        guest.SetAnyTimerActive(false);
+
     }
 
-    void RestartIdleTimer()
-    {
-        _currentIdleTime = _maxIdleTime;
-    }
+
 }

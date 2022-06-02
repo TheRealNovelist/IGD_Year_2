@@ -4,7 +4,15 @@ using UnityEngine;
 
 public abstract class GuestState : MonoBehaviour
 {
-    public abstract void EnterState(Guest guest);
-    public abstract void UpdateState(Guest guest);
-    public abstract void ExitState(Guest guest);
+    protected GuestStateMachine _stateMachine;
+
+    public GuestState Init(GuestStateMachine stateMachine)
+    {
+        _stateMachine = stateMachine;
+        return this;
+    }
+    
+    public abstract void EnterState();
+    public abstract void UpdateState();
+    public abstract void ExitState();
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 
 public class GuestRequestingState : GuestState
@@ -9,78 +10,23 @@ public class GuestRequestingState : GuestState
     [SerializeField] private GuestIdleState IdleState;
 
     [Header("Component")] 
-    [SerializeField] private GuestMoodFeedback _feedback;
+    [SerializeField] private GuestMoodBehaviour _moodBehaviour;
     
-    [Header("Settings")]
-    [SerializeField] private float maxMoodTime = 5f;
-
-    private float _currentMoodTime;
-    
-    public override void EnterState(Guest guest)
+    public override void EnterState()
     {
-        //Feedback setup
-        _feedback.gameObject.SetActive(true);
-        _feedback.ChangeMoodFeedback(guest.GetCurrentMood());
-
-        guest.SetAnyTimerActive(true);
-        RestartMoodTimer();
-        
-        //Subscribe to the OnMoodChanged event
-        guest.OnMoodChanged += OnMoodChange;
+        _moodBehaviour.enabled = true;
     }
 
-    public override void UpdateState(Guest guest)
+    public override void UpdateState()
     {
-        if (!guest.IsAnyTimerRunning) 
-            return;
-        
-        _currentMoodTime -= Time.deltaTime;
-        _feedback.UpdateCurrentFill(GetMoodTimeNormalized());
-        
-        if (_currentMoodTime <= 0)
+        if (_moodBehaviour.GetCurrentMood() == Mood.Leave)
         {
-            _currentMoodTime = 0;
-
-            Mood currentMood = guest.GetCurrentMood();
-            if (currentMood > Mood.Angry)
-            {
-                guest.ChangeMood(-1);
-            }
-            else if (currentMood == Mood.Angry)
-            {
-                guest.SwitchState(LeaveState);
-            }
+            _stateMachine.SwitchState(LeaveState);
         }
     }
 
-    public override void ExitState(Guest guest)
+    public override void ExitState()
     {
-        guest.OnMoodChanged -= OnMoodChange;
-
-        guest.SetAnyTimerActive(false);
-        
-        _feedback.gameObject.SetActive(false);
-    }
-    
-    
-    void OnMoodChange(Mood mood)
-    {
-        _feedback.ChangeMoodFeedback(mood);
-        RestartMoodTimer();
-    }
-    
-    void RestartMoodTimer()
-    {
-        _currentMoodTime = maxMoodTime;
-    }
-    
-    public float GetMoodTimerSeconds()
-    {
-        return _currentMoodTime;
-    }
-
-    public float GetMoodTimeNormalized()
-    {
-        return GetMoodTimerSeconds() / maxMoodTime;
+        _moodBehaviour.enabled = false;
     }
 }
