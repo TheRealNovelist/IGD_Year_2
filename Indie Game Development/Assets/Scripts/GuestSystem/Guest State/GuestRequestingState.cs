@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,8 +11,15 @@ public class GuestRequestingState : GuestState
     [SerializeField] private GuestIdleState IdleState;
 
     [Header("Component")] 
+    [SerializeField] private Guest _guest;
     [SerializeField] private GuestMoodBehaviour _moodBehaviour;
     
+    private void Awake()
+    {
+        if (!_moodBehaviour) GetComponent<GuestMoodBehaviour>();
+        if (!_guest) GetComponent<Guest>();
+    }
+
     public override void EnterState()
     {
         _moodBehaviour.enabled = true;
@@ -19,6 +27,11 @@ public class GuestRequestingState : GuestState
 
     public override void UpdateState()
     {
+        if (_guest.IsCurrentRequestFulfilled())
+        {
+            _stateMachine.SwitchState(IdleState);
+        }
+        
         if (_moodBehaviour.GetCurrentMood() == Mood.Leave)
         {
             _stateMachine.SwitchState(LeaveState);

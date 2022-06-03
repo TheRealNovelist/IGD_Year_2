@@ -2,8 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GuestEnterState : GuestState
+public class GuestQueueState : GuestState
 {
+    [Header("State to Transition")] 
+    [SerializeField] private GuestRequestingState RequestingState;
+
     public override void EnterState()
     {
         
@@ -18,4 +21,6 @@ public class GuestEnterState : GuestState
     {
         
     }
+    
+    
 }

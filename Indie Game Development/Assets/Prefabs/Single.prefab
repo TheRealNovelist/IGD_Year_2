@@ -327,9 +327,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb7a137560575ea4984a0bc136040541, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomSize: {x: 1, y: 1}
   cost: 500
   size: 1
+  roomType: 0
   upVariant: {fileID: 0}
   downVariant: {fileID: 0}
 --- !u!1 &7831556786421319571
@@ -404,9 +404,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb7a137560575ea4984a0bc136040541, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomSize: {x: 1, y: 1}
   cost: 500
-  size: 1
+  size: 0
+  roomType: 0
   upVariant: {fileID: 8485803067887489047}
   downVariant: {fileID: 5266330925301321589}
 --- !u!1 &8485803067887489047

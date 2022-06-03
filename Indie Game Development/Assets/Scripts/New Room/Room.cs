@@ -3,19 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
-public class RoomConstructor : MonoBehaviour
+public class Room : MonoBehaviour
 {
-    [Header("Base Property")]
-    public Vector2Int roomSize = new Vector2Int(1, 1);
+    [Header("Base Property")] 
     public int cost = 500;
-    public GuestroomSize size = GuestroomSize.Single;
+    public RoomSize size = RoomSize.Single;
+    public RoomType roomType = RoomType.Guestroom;
 
     [Header("Versions")] 
     [SerializeField] private GameObject upVariant;
     [SerializeField] private GameObject downVariant;
     [Space] 
-    private List<Cell> cellsOccupied;
+    private List<Cell> _cellsOccupied;
 
+    public Vector2Int GetRoomSize()
+    {
+        return Utility.ConvertRoomSize(size);
+    }
+    
     public void OnRoomBuilt(List<Cell> cellToOccupy, FloorLayer layer)
     {
         switch (layer)
@@ -34,9 +39,9 @@ public class RoomConstructor : MonoBehaviour
                 break;
         }
         
-        cellsOccupied = new List<Cell>(cellToOccupy);
+        _cellsOccupied = new List<Cell>(cellToOccupy);
 
-        foreach (Cell cell in cellsOccupied)
+        foreach (Cell cell in _cellsOccupied)
         {
             cell.OnCellBuilt();
         }
@@ -44,7 +49,7 @@ public class RoomConstructor : MonoBehaviour
 
     public void OnRoomDestroy()
     {
-        foreach (Cell cell in cellsOccupied)
+        foreach (Cell cell in _cellsOccupied)
         {
             cell.OnRoomDestroy();
         }

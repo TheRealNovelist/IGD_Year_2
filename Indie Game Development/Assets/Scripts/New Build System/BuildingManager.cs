@@ -60,17 +60,17 @@ public class BuildingManager : MonoBehaviour
             return;
         }
 
-        RoomConstructor constructor = roomPrefab.GetComponent<RoomConstructor>();
+        Room room = roomPrefab.GetComponent<Room>();
         Vector2 roomSpawnPoint = GetSmallestCell(cellToOccupy).transform.position;
 
         switch (layer)
         {
             case FloorLayer.Up:
-                roomSpawnPoint += (Vector2)constructor.roomSize * 0.5f;
+                roomSpawnPoint += (Vector2)room.GetRoomSize() * 0.5f;
                 break;
             case FloorLayer.Down:
                 roomSpawnPoint += new Vector2(0, 1);
-                roomSpawnPoint = new Vector2(roomSpawnPoint.x + constructor.roomSize.x * 0.5f, roomSpawnPoint.y - constructor.roomSize.y * 0.5f);
+                roomSpawnPoint = new Vector2(roomSpawnPoint.x + room.GetRoomSize().x * 0.5f, roomSpawnPoint.y - room.GetRoomSize().y * 0.5f);
                 break;
             case FloorLayer.None:
                 Debug.LogError("BuildingManager.SpawnRoom: Illegal layer detected");
@@ -82,7 +82,7 @@ public class BuildingManager : MonoBehaviour
 
         GameObject newRoom = Instantiate(roomPrefab, roomSpawnPoint, Quaternion.identity);
         newRoom.transform.parent = _floorManager.currentFloor.allRooms.transform;
-        newRoom.GetComponent<RoomConstructor>().OnRoomBuilt(cellToOccupy, layer);
+        newRoom.GetComponent<Room>().OnRoomBuilt(cellToOccupy, layer);
     }
 
     private Cell GetSmallestCell(List<Cell> cells)
@@ -99,7 +99,7 @@ public class BuildingManager : MonoBehaviour
     private bool IsRoomSizeReached()
     {
         //Find out if the cell selected aligned with the amount of room size on x axis.
-        return _allCellSelected.Count == (int)_selectedRoomPrefab.GetComponent<RoomConstructor>().roomSize.x;
+        return _allCellSelected.Count == (int)_selectedRoomPrefab.GetComponent<Room>().GetRoomSize().x;
     }
 
     private void OnRoomSizeReached()
