@@ -43,7 +43,6 @@ public class BuildingManager : MonoBehaviour
         {
             if (prefab.name == roomName)
             {
-                //Validate first if the prefab is ok to use.
                 return prefab;
             }
         }

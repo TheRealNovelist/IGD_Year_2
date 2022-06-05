@@ -13,12 +13,6 @@ public class GuestRequestingState : GuestState
     [Header("Component")] 
     [SerializeField] private Guest _guest;
     [SerializeField] private GuestMoodBehaviour _moodBehaviour;
-    
-    private void Awake()
-    {
-        if (!_moodBehaviour) GetComponent<GuestMoodBehaviour>();
-        if (!_guest) GetComponent<Guest>();
-    }
 
     public override void EnterState()
     {

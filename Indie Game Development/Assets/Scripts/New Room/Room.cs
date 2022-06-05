@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -53,5 +54,10 @@ public class Room : MonoBehaviour
         {
             cell.OnRoomDestroy();
         }
+    }
+
+    public void OnMouseDown()
+    {
+        GuestToRoomInput.SetRoom(this);
     }
 }

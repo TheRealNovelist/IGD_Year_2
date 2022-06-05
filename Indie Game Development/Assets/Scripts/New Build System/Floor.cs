@@ -19,11 +19,11 @@ public class Floor : MonoBehaviour
     [SerializeField] private int _floorId = 0;
 
     [SerializeField] private GameObject cellPrefab;
-    [SerializeField] private GameObject corridorPrefab;
+    [SerializeField] private Corridor corridor;
 
     [SerializeField] private List<Cell> allCells; //Storing all reference for activating grid
 
-    public GameObject allRooms;
+    [HideInInspector] public GameObject allRooms;
 
     public void InitFloor(FloorManager floorManager, int floorId, int floorLength = 6)
     {
@@ -39,39 +39,21 @@ public class Floor : MonoBehaviour
         Vector3 floorPosition = floorTransform.position;
         
         GameObject upperLayer = new GameObject("Upper Cell Layer")  { transform = { position = floorPosition, parent = floorTransform}};
-        GameObject corridorLayer = new GameObject("Corridor Layer") { transform = { position = floorPosition, parent = floorTransform}};
         GameObject lowerLayer = new GameObject("Lower Cell Layer")  { transform = { position = floorPosition, parent = floorTransform}};
 
         allRooms = new GameObject("All Rooms") { transform = { position = floorPosition, parent = floorTransform}};
         
         float spawnOffset = floorPosition.y;
         
+        corridor.SetCorridorSize(floorLength);
+        
         for (int i = 0; i < floorLength; i++)
         {
-            GenerateCorridor(i, 0, corridorLayer, spawnOffset);
             GenerateCell(i, 1, upperLayer, spawnOffset);
             GenerateCell(i, -1, lowerLayer, spawnOffset);
         }
     }
-
-    private void GenerateCorridor(int x, int y, GameObject parentObj = null, float spawnOffset = 0f)
-    {
-        if (!corridorPrefab)
-        {
-            Debug.Log("FloorScript: Please put in the appropriate CORRIDOR PREFAB");
-            Debug.Break();
-        }
-        
-        GameObject newCorridor = Instantiate(corridorPrefab, new Vector3 (x, y + spawnOffset, 0), Quaternion.identity);
-        newCorridor.name = "Corridor at " + "(" + x + ", " + y + ")";
-
-        //Check if a parent object is assigned, make this a child of that object
-        if (parentObj != null)
-        {
-            newCorridor.transform.parent = parentObj.transform;
-        }
-    }
-
+    
     private void GenerateCell(int x, int y, GameObject parentObj = null, float spawnOffset = 0f)
     {
         if (!cellPrefab)

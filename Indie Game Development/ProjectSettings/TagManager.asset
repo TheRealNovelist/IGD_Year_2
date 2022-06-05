@@ -50,3 +50,6 @@ TagManager:
   - name: Room
     uniqueID: 798014987
     locked: 0
+  - name: Guest
+    uniqueID: 205608543
+    locked: 0

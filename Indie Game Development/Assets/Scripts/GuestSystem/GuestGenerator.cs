@@ -6,15 +6,35 @@ using UnityEngine;
 public class GuestGenerator : MonoBehaviour
 {
     [SerializeField] private GameObject guestPrefab;
-    
-    
-    private void GenerateGuest()
+
+    private Queue<Guest> guestQueue = new Queue<Guest>();
+
+    private void Start()
     {
-        Instantiate(guestPrefab, gameObject.transform);
+        StartCoroutine(GenerateGuest(0f));
     }
 
-    private void LeaveQueue()
+    private IEnumerator GenerateGuest(float delay)
     {
+        yield return new WaitForSeconds(delay);
         
+        GameObject newGuest = Instantiate(guestPrefab, gameObject.transform);
+        var guest = newGuest.GetComponent<Guest>();
+        guest.Init(this);
+        guestQueue.Enqueue(guest);
+    }
+
+    public void LeaveQueue()
+    {
+        guestQueue.Dequeue();
+        StartCoroutine(GenerateGuest(3f));
+    }
+
+    private void OnMouseDown()
+    {
+        if (guestQueue.Count > 0)
+        {
+            GuestToRoomInput.SetGuest(guestQueue.Peek());
+        }
     }
 } 

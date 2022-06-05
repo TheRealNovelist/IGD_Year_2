@@ -253,10 +253,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3879274403628441333}
-  - component: {fileID: 3456310199719891144}
+  - component: {fileID: 113465442820500309}
   - component: {fileID: 4201859112398416409}
   - component: {fileID: 871378372586295582}
-  - component: {fileID: 3597709586287024842}
   m_Layer: 0
   m_Name: BaseGuest
   m_TagString: Untagged
@@ -280,7 +279,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3456310199719891144
+--- !u!114 &113465442820500309
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -317,22 +316,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d6c796ee9570c644bd49ba4d7a758f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _settings: {fileID: 0}
-  _feedback: {fileID: 7371776896651447578}
-  _maxTime: 5
---- !u!135 &3597709586287024842
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3879274403628441336}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  settings: {fileID: 0}
+  _independentFeedback: {fileID: 7371776896651447578}
+  maxTime: 5
 --- !u!1 &3879274403693418005
 GameObject:
   m_ObjectHideFlags: 0
@@ -467,8 +453,8 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 205608543
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!114 &3879274404343328995
 MonoBehaviour:
@@ -509,7 +495,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 55
 --- !u!1 &4426124784370835299
 GameObject:
   m_ObjectHideFlags: 0
@@ -787,8 +773,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 205608543
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: 577f2ea08e916ea4f82af90852ff60f7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -922,7 +908,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LeaveState: {fileID: 1829438843839201585}
   IdleState: {fileID: 966644705362629066}
-  _guest: {fileID: 3456310199719891144}
+  _guest: {fileID: 113465442820500309}
   _moodBehaviour: {fileID: 871378372586295582}
 --- !u!1 &7064444067534059250
 GameObject:

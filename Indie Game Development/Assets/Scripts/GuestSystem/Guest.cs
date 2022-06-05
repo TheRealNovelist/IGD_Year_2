@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Guest : MonoBehaviour
 {
+    private GuestGenerator _generator;
+    
     private RoomSize _preferredRoom;
     private Room _currentRoom;
     
@@ -12,20 +14,27 @@ public class Guest : MonoBehaviour
 
     private void Awake()
     {
-        _preferredRoom =  Utility.RandomEnumValue<RoomSize>();
+        _preferredRoom = Utility.RandomEnumValue<RoomSize>();
     }
 
-    private void GenerateNewRequest()
+    public void Init(GuestGenerator generator)
     {
-        
+        _generator = generator;
     }
+    
     public bool IsCurrentRequestFulfilled()
     {
-        if (!_currentRoom)
+        if (_currentRoom == false)
         {
-            return _currentRoom;
+            return false;
         }
 
-        return false;
+        return true;
+    }
+
+    public void SetRoom(Room room)
+    {
+        _currentRoom = room;
+        _generator.LeaveQueue();
     }
 }
