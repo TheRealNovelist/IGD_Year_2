@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GuestToRoomInput : MonoBehaviour
+public class GuestAssignToRoomInput : MonoBehaviour
 {
     private static Guest _currentGuest;
     

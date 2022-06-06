@@ -58,6 +58,6 @@ public class Room : MonoBehaviour
 
     public void OnMouseDown()
     {
-        GuestToRoomInput.SetRoom(this);
+        GuestAssignToRoomInput.SetRoom(this);
     }
 }

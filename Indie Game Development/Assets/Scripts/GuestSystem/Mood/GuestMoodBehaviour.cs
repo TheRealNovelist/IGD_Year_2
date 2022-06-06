@@ -42,7 +42,7 @@ public class GuestMoodBehaviour : MonoBehaviour
         _feedback.SetFeedbackActive(false);
     }
 
-    private void ChangeMood(int amount, bool alsoRestartTimer = false)
+    public void AddMood(int amount, bool alsoRestartTimer = false)
     {
         _currentMood += amount;
         _feedback.ChangeMoodFeedback(_currentMood);
@@ -62,7 +62,7 @@ public class GuestMoodBehaviour : MonoBehaviour
             
             if (_currentMood > Mood.Leave)
             {
-                ChangeMood(-1, true);
+                AddMood(-1, true);
             }
         }
     }

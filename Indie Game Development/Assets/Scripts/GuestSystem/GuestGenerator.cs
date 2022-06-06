@@ -34,7 +34,7 @@ public class GuestGenerator : MonoBehaviour
     {
         if (guestQueue.Count > 0)
         {
-            GuestToRoomInput.SetGuest(guestQueue.Peek());
+            GuestAssignToRoomInput.SetGuest(guestQueue.Peek());
         }
     }
 } 
