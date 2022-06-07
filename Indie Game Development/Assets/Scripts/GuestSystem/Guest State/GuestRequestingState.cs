@@ -1,7 +1,5 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
 
 public class GuestRequestingState : GuestState
@@ -17,13 +15,19 @@ public class GuestRequestingState : GuestState
     public override void EnterState()
     {
         _moodBehaviour.enabled = true;
+        _guest.AddNewService();
     }
 
     public override void UpdateState()
     {
+        if (Input.GetKeyDown(KeyCode.Space) && GuestToRoomInput.IsCurrentGuest(_guest))
+        {
+           _guest.ProvideService();
+        }
+        
         if (_guest.IsCurrentRequestFulfilled())
         {
-            _stateMachine.SwitchState(IdleState);
+            _stateMachine.SwitchState(IdleState.WaitForSecond(10f));
         }
         
         if (_moodBehaviour.GetCurrentMood() == Mood.Leave)

@@ -256,6 +256,7 @@ GameObject:
   - component: {fileID: 113465442820500309}
   - component: {fileID: 4201859112398416409}
   - component: {fileID: 871378372586295582}
+  - component: {fileID: -8465037086268412782}
   m_Layer: 0
   m_Name: BaseGuest
   m_TagString: Untagged
@@ -291,6 +292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3265b988e787f440a9c9ce4d495a736, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxServices: 3
 --- !u!114 &4201859112398416409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -319,6 +321,22 @@ MonoBehaviour:
   settings: {fileID: 0}
   _independentFeedback: {fileID: 7371776896651447578}
   maxTime: 5
+--- !u!58 &-8465037086268412782
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3879274403628441336}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!1 &3879274403693418005
 GameObject:
   m_ObjectHideFlags: 0
@@ -1210,3 +1228,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RequestingState: {fileID: 9020822225914198223}
   CheckoutState: {fileID: 0}
+  idleTime: 5

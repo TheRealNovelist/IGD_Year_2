@@ -10,18 +10,13 @@ public class GuestStateMachine : MonoBehaviour
     private GuestState _currentState;
     
     #region Unity Methods
-    private void Start()
-    {
-        StartStateMachine();
-    }
-
     private void Update()
     {
         _currentState.UpdateState();
     }
     #endregion
     
-    private void StartStateMachine()
+    public void StartStateMachine()
     {
         _currentState = startingState.Init(this);
         _currentState.EnterState();

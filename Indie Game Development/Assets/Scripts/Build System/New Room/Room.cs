@@ -17,7 +17,7 @@ public class Room : MonoBehaviour
     [Space] 
     private List<Cell> _cellsOccupied;
 
-    public Vector2Int GetRoomSize()
+    public Vector2Int GetRoomSize() 
     {
         return Utility.ConvertRoomSize(size);
     }
@@ -58,6 +58,6 @@ public class Room : MonoBehaviour
 
     public void OnMouseDown()
     {
-        GuestAssignToRoomInput.SetRoom(this);
+        GuestToRoomInput.SetRoom(this);
     }
 }
