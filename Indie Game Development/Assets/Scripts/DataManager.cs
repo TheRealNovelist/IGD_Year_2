@@ -8,6 +8,7 @@ public enum RoomType
     Service
 }
 
+[System.Serializable]
 public enum ServiceType
 {
     None,

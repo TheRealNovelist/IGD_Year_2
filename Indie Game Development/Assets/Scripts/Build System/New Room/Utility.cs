@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 public enum RoomSize
 {
@@ -16,6 +17,14 @@ public static class Utility
         var values = Enum.GetValues(typeof(T));
         int random = UnityEngine.Random.Range(0, values.Length);
         return (T)values.GetValue(random);
+    }
+    
+    public static T RandomEnumValue<T>(List<T> excludes)
+    {
+        var values = (T[])Enum.GetValues(typeof(T));
+        var availableValues = values.Except(excludes).ToArray();
+        int random = UnityEngine.Random.Range(0, availableValues.Length);
+        return availableValues[random];
     }
     
     public static Vector2Int ConvertRoomSize(RoomSize size)

@@ -14,14 +14,16 @@ public static class GuestToRoomInput
     
     public static void SetGuest(Guest guest)
     {
-        _currentGuest = guest;
-        if (guest != null)
+        if (_currentGuest != null)
         {
-            Debug.Log("Selected " + guest.name);
+            _currentGuest.Deselect();
         }
-        else
+        
+        _currentGuest = guest;
+        
+        if (_currentGuest != null)
         {
-            Debug.Log("Deselected Guest");
+            _currentGuest.Select();
         }
     }
 
@@ -31,6 +33,7 @@ public static class GuestToRoomInput
             return;
         
         _currentGuest.SetRoom(room);
+        _currentGuest.Deselect();
         _currentGuest = null;
     }
 }

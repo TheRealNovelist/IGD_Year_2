@@ -24,37 +24,29 @@ public class GuestGenerator : MonoBehaviour
         _visibleGuests = new Guest[_visibleQueuePoints.Count];
     }
 
-    private void Start()
-    {
-        for (int i = 0; i < 5; i++)
-        {
-            GenerateGuest();
-        }
-        
-        while (!IsVisibleQueueFull())
-        {
-            MoveToVisibleQueue(_queuedGuests[0]);
-        }
-    }
-    
-    private void GenerateGuest()
+    public Guest GenerateGuest()
     {
         GameObject newGuest = Instantiate(guestPrefab);
         newGuest.SetActive(false);
         
         var guest = newGuest.GetComponent<Guest>();
-        _queuedGuests.Add(guest);
-
-        guest.name = "Guest no." + _queuedGuests.IndexOf(guest);
+        
+        if (!IsVisibleQueueFull())
+        {
+            MoveToVisibleQueue(guest);
+        }
+        else
+        {
+            _queuedGuests.Add(guest);
+        }
+        
+        return guest;
     }
 
     private void MoveToVisibleQueue(Guest guest)
     {
         for (int i = 0; i < _visibleQueuePoints.Count; i++)
         {
-            if (!_queuedGuests.Contains(guest))
-                return;
-
             if (_visibleGuests[i] != null)
                 continue;
 
@@ -64,6 +56,7 @@ public class GuestGenerator : MonoBehaviour
             guest.transform.position = _visibleQueuePoints[i].transform.position;
             guest.gameObject.SetActive(true);
             guest.Init(this);
+            break;
         }
     }
 

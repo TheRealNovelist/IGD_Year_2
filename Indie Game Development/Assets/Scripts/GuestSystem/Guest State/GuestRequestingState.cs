@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,14 +16,14 @@ public class GuestRequestingState : GuestState
     public override void EnterState()
     {
         _moodBehaviour.enabled = true;
-        _guest.AddNewService();
+        _guest.RequestNewService();
     }
 
     public override void UpdateState()
     {
         if (Input.GetKeyDown(KeyCode.Space) && GuestToRoomInput.IsCurrentGuest(_guest))
         {
-           _guest.ProvideService();
+           _guest.ProvideService(ServiceManager.CurrentServiceType);
         }
         
         if (_guest.IsCurrentRequestFulfilled())
