@@ -18,7 +18,7 @@ public class MoodSettings : ScriptableObject
     public List<MoodData> MoodList;
     
     [System.Serializable]
-    public struct MoodData
+    public class MoodData
     {
         public Mood mood;
         public float weight;
