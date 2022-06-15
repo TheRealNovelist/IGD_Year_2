@@ -63,7 +63,7 @@ public class DynamicList : MonoBehaviour
             ToggleEmptyContent(false);
         }
 
-        content.name = "Guest " + contentList.IndexOf(content);
+        content.name = "Content " + contentList.IndexOf(content);
 
         ChangeContentRectHeight(contentHeight);
 
@@ -151,15 +151,8 @@ public class DynamicList : MonoBehaviour
             return false;
         }
         //If the content amount is still under the max amount, return not full
-        else if (maxContentAmount > contentList.Count)
-        {
-            return false;
-        }
-        //else return true
-        else
-        {
-            return true;
-        }
+
+        return maxContentAmount <= contentList.Count;
     }
 
     //Change the max size of the list
