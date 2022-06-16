@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 
 public enum RoomSize
 {
@@ -10,7 +11,7 @@ public enum RoomSize
     Quad
 }
 
-public static class Utility
+public static class MyUtility
 {
     public static T RandomEnumValue<T>()
     {
@@ -35,6 +36,14 @@ public static class Utility
             case RoomSize.Single:       return new Vector2Int(1, 1);
             case RoomSize.Double:       return new Vector2Int(2, 1);
             case RoomSize.Quad:         return new Vector2Int(2, 2);
+        }
+    }
+
+    public static void SetText(TextMeshProUGUI textMesh, string text)
+    {
+        if (text != null)
+        {
+            textMesh.text = text;
         }
     }
 }

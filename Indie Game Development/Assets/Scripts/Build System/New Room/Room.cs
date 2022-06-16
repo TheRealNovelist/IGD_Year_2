@@ -19,7 +19,7 @@ public class Room : MonoBehaviour
 
     public Vector2Int GetRoomSize() 
     {
-        return Utility.ConvertRoomSize(size);
+        return MyUtility.ConvertRoomSize(size);
     }
     
     public void OnRoomBuilt(List<Cell> cellToOccupy, FloorLayer layer)

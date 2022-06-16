@@ -28,7 +28,7 @@ public class Guest : MonoBehaviour
     
     private void Awake()
     {
-        _preferredRoom = Utility.RandomEnumValue<RoomSize>();
+        _preferredRoom = MyUtility.RandomEnumValue<RoomSize>();
         statusText.text = _preferredRoom.ToString();
         _currentServiceAmount = Random.Range(1, maxServices);
         
@@ -48,7 +48,7 @@ public class Guest : MonoBehaviour
             return;
 
         var exclude = new List<ServiceType> { ServiceType.None };
-        _currentRequestedService = Utility.RandomEnumValue(exclude);
+        _currentRequestedService = MyUtility.RandomEnumValue(exclude);
         statusText.text = _currentRequestedService.ToString();
     }
 
