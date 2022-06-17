@@ -10,6 +10,9 @@ using UnityEngine.EventSystems;
 public class ShopUIElement : MonoBehaviour, IPointerClickHandler
 {
     private ShopUIManager _manager;
+
+    [TitleGroup("Shop Item")] 
+    [SerializeField] private GameObject prefab;
     
     [TitleGroup("Text")]
     [SerializeField] private TextMeshProUGUI nameText;

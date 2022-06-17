@@ -13,17 +13,14 @@ public enum RoomSize
 
 public static class MyUtility
 {
-    public static T RandomEnumValue<T>()
+    //Return a random enum value of type passed in
+    public static T RandomEnumValue<T>(List<T> excludes = null)
     {
-        var values = Enum.GetValues(typeof(T));
-        int random = UnityEngine.Random.Range(0, values.Length);
-        return (T)values.GetValue(random);
-    }
-    
-    public static T RandomEnumValue<T>(List<T> excludes)
-    {
+        //Get all enum values
         var values = (T[])Enum.GetValues(typeof(T));
-        var availableValues = values.Except(excludes).ToArray();
+        
+        //Calculate values that are excluded in parameter. Default is null, which mean the method will take all values into account. 
+        var availableValues = excludes != null ? values.Except(excludes).ToArray() : values;
         int random = UnityEngine.Random.Range(0, availableValues.Length);
         return availableValues[random];
     }
