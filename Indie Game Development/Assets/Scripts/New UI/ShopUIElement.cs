@@ -12,7 +12,8 @@ public class ShopUIElement : MonoBehaviour, IPointerClickHandler
     private ShopUIManager _manager;
 
     [TitleGroup("Shop Item")] 
-    [SerializeField] private GameObject prefab;
+    [InlineButton("SetData", "Refresh")]
+    [SerializeField] private RoomSO roomSO;
     
     [TitleGroup("Text")]
     [SerializeField] private TextMeshProUGUI nameText;
@@ -29,11 +30,17 @@ public class ShopUIElement : MonoBehaviour, IPointerClickHandler
     [TitleGroup("Lock Mode")]
     [InlineButton("FlipFlopLockState", "Lock/Unlock")]
     [SerializeField] private GameObject lockElement; 
-    [HideInInspector] public bool isElementLocked;
+    [HideInInspector] public bool isElementLocked = false;
 
     public void Init(ShopUIManager manager)
     {
         _manager = manager;
+    }
+
+    public void SetData()
+    {
+        SetShopText(roomSO.roomName, roomSO.price.ToString(), roomSO.size.ToString());
+        SetShopSprite(roomSO.roomIcon, roomSO.roomType == RoomType.Guestroom ? Color.cyan : Color.red);
     }
     
     public void SetShopText(string itemName = null, string price = null, string cellSize = null)
@@ -64,7 +71,7 @@ public class ShopUIElement : MonoBehaviour, IPointerClickHandler
         isElementLocked = isLocked;
         lockElement.SetActive(isLocked);
     }
-
+    
     public void FlipFlopLockState()
     {
         SetLockState(!isElementLocked);
@@ -76,4 +83,22 @@ public class ShopUIElement : MonoBehaviour, IPointerClickHandler
 
         _manager.OnElementClick(this);
     }
+
+    private void OnDisable()
+    {
+        if (_manager.IsCurrentElement(this))
+        {
+            _manager.DeselectElement(this);
+        }
+    }
+
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        if (roomSO != null)
+        {
+            SetData();
+        }
+    }
+#endif
 }

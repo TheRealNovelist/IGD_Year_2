@@ -6,8 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 public class Room : MonoBehaviour
 {
-    [Header("Base Property")] 
-    public int cost = 500;
+    [Header("Base Property")]
     public RoomSize size = RoomSize.Single;
     public RoomType roomType = RoomType.Guestroom;
 
@@ -48,7 +47,7 @@ public class Room : MonoBehaviour
         }
     }
 
-    public void OnRoomDestroy()
+    public void OnDestroy()
     {
         foreach (Cell cell in _cellsOccupied)
         {
@@ -58,6 +57,11 @@ public class Room : MonoBehaviour
 
     public void OnMouseDown()
     {
+        if (BuildingManager.IsDestroyMode)
+        {
+            Destroy(gameObject);
+        }
+        
         GuestToRoomInput.SetRoom(this);
     }
 }
