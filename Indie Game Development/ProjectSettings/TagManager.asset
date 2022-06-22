@@ -41,6 +41,9 @@ TagManager:
   - name: Background
     uniqueID: 718011093
     locked: 0
+  - name: Corridor
+    uniqueID: 2980859481
+    locked: 0
   - name: Wall
     uniqueID: 88597767
     locked: 0
@@ -49,9 +52,6 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: Corridor
-    uniqueID: 2980859481
     locked: 0
   - name: Room
     uniqueID: 798014987

@@ -47,7 +47,7 @@ public class Room : MonoBehaviour
         }
     }
 
-    public void OnDestroy()
+    public void OnRoomDestroy()
     {
         foreach (Cell cell in _cellsOccupied)
         {
