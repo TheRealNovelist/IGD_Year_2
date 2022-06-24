@@ -17,4 +17,4 @@ MonoBehaviour:
   price: 500
   size: 1
   roomType: 0
-  prefab: {fileID: 0}
+  prefab: {fileID: 7831556786421319571, guid: ebaa40e2335ca7c4da829d5e106fc875, type: 3}
