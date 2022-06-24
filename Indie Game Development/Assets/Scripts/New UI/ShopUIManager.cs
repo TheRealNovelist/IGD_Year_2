@@ -35,12 +35,14 @@ public class ShopUIManager : MonoBehaviour
     {
         _currentElement = element;
         element.SetShopBackground(selectedColor);
+        BuildingManager.SetCurrentRoomData(element.GetRoomData());
     }
     
     public void DeselectElement(ShopUIElement element)
     {
         _currentElement = null;
         element.SetShopBackground(deselectedColor);
+        BuildingManager.SetCurrentRoomData(null);
     }
 
     public void OnElementClick(ShopUIElement newElement)

@@ -12,8 +12,8 @@ public class ShopUIElement : MonoBehaviour, IPointerClickHandler
     private ShopUIManager _manager;
 
     [TitleGroup("Shop Item")] 
-    [InlineButton("SetData", "Refresh")]
-    [SerializeField] private RoomSO roomSO;
+    [InlineButton("SetFromData", "Refresh")]
+    [SerializeField] private RoomData roomData;
     
     [TitleGroup("Text")]
     [SerializeField] private TextMeshProUGUI nameText;
@@ -37,10 +37,15 @@ public class ShopUIElement : MonoBehaviour, IPointerClickHandler
         _manager = manager;
     }
 
-    public void SetData()
+    public RoomData GetRoomData()
     {
-        SetShopText(roomSO.roomName, roomSO.price.ToString(), roomSO.size.ToString());
-        SetShopSprite(roomSO.roomIcon, roomSO.roomType == RoomType.Guestroom ? Color.cyan : Color.red);
+        return roomData;
+    }
+    
+    public void SetFromData()
+    {
+        SetShopText(roomData.roomName, roomData.price.ToString(), roomData.size.ToString());
+        SetShopSprite(roomData.roomIcon, roomData.roomType == RoomType.Guestroom ? Color.cyan : Color.red);
     }
     
     public void SetShopText(string itemName = null, string price = null, string cellSize = null)
@@ -95,9 +100,9 @@ public class ShopUIElement : MonoBehaviour, IPointerClickHandler
 #if UNITY_EDITOR
     private void OnValidate()
     {
-        if (roomSO != null)
+        if (roomData != null)
         {
-            SetData();
+            SetFromData();
         }
     }
 #endif

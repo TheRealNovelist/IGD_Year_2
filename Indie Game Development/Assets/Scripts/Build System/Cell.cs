@@ -20,12 +20,10 @@ public class Cell : MonoBehaviour
             _buildingManager = GameObject.Find("_BuildingManager").GetComponent<BuildingManager>();
     }
 
-    public void InitCell(int cellNumber, FloorLayer cellLayer, Floor floor)
+    public void InitCell(int cellNumber, FloorLayer cellLayer)
     {
         index = cellNumber;
         layer = cellLayer;
-
-        _floor = floor;
     }
 
     public void SetCellActive(bool active)

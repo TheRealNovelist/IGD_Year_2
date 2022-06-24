@@ -43,4 +43,15 @@ public static class MyUtility
             textMesh.text = text;
         }
     }
+    
+    private static Cell GetSmallestCell(List<Cell> cells)
+    {
+        Cell smallestCell = cells[0];
+        for (int i = 1; i < cells.Count; i++)
+        {
+            if (smallestCell.index > cells[i].index)
+                smallestCell = cells[i];
+        }
+        return smallestCell;
+    }
 }

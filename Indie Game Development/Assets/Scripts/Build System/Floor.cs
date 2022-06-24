@@ -23,8 +23,6 @@ public class Floor : MonoBehaviour
 
     [SerializeField] private List<Cell> allCells; //Storing all reference for activating grid
 
-    [HideInInspector] public GameObject allRooms;
-
     public void InitFloor(FloorManager floorManager, int floorId, int floorLength = 6)
     {
         _floorId = floorId;
@@ -41,20 +39,16 @@ public class Floor : MonoBehaviour
         GameObject upperLayer = new GameObject("Upper Cell Layer")  { transform = { position = floorPosition, parent = floorTransform}};
         GameObject lowerLayer = new GameObject("Lower Cell Layer")  { transform = { position = floorPosition, parent = floorTransform}};
 
-        allRooms = new GameObject("All Rooms") { transform = { position = floorPosition, parent = floorTransform}};
-        
-        float spawnOffset = floorPosition.y;
-        
         corridor.SetCorridorSize(floorLength);
         
         for (int i = 0; i < floorLength; i++)
         {
-            GenerateCell(i, 1, upperLayer, spawnOffset);
-            GenerateCell(i, -1, lowerLayer, spawnOffset);
+            ConstructCell(i, 1, upperLayer);
+            ConstructCell(i, -1, lowerLayer);
         }
     }
     
-    private void GenerateCell(int x, int y, GameObject parentObj = null, float spawnOffset = 0f)
+    private void ConstructCell(int x, int y, GameObject parentObj = null)
     {
         if (!cellPrefab)
         {
@@ -68,10 +62,10 @@ public class Floor : MonoBehaviour
             Debug.Break();
         }
 
-        GameObject newCell = Instantiate(cellPrefab, new Vector3(x, y + spawnOffset, 0), Quaternion.identity);
+        GameObject newCell = Instantiate(cellPrefab, new Vector3(x, y + transform.position.y, 0), Quaternion.identity);
         Cell cellScript = newCell.GetComponent<Cell>();
 
-        cellScript.InitCell(x, (FloorLayer)y, this);
+        cellScript.InitCell(x, (FloorLayer)y);
 
         newCell.name = "Buildable Cell at " + "(" + x + ", " + y + ")";
 

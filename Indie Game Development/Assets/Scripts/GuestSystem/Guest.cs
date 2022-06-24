@@ -91,10 +91,6 @@ public class Guest : MonoBehaviour
         transform.position = roomTransform.position;
         transform.parent = roomTransform;
         
-        if (_currentRoom.size == _preferredRoom)
-        {
-            _mood.AddMood(+1);
-        }
         _generator.LeaveQueue(this);
     }
 
