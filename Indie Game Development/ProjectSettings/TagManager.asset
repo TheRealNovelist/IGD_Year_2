@@ -42,20 +42,17 @@ TagManager:
     uniqueID: 718011093
     locked: 0
   - name: Corridor
-    uniqueID: 2980859481
+    uniqueID: 1879436787
     locked: 0
-  - name: Wall
-    uniqueID: 88597767
+  - name: Hall
+    uniqueID: 3476088385
     locked: 0
-  - name: Border
-    uniqueID: 1728907315
+  - name: Up
+    uniqueID: 378957803
+    locked: 0
+  - name: Down
+    uniqueID: 3731374179
     locked: 0
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: Room
-    uniqueID: 798014987
-    locked: 0
-  - name: Guest
-    uniqueID: 205608543
     locked: 0

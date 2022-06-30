@@ -77,8 +77,8 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 30.000002, y: 30.000002}
+  m_DrawMode: 2
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -99,12 +99,12 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0.5, y: 0.5}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.047812644, y: 0.05080542}
-    oldSize: {x: 1.118, y: 1.118}
-    newSize: {x: 30.000002, y: 30.000002}
+    border: {x: 0.107334524, y: 0.107334524, z: 0.107334524, w: 0.107334524}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
-    drawMode: 0
+    drawMode: 2
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
@@ -122,6 +122,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: defe91826514d514f8c52b6d96b7376e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xIndex: 0
-  yIndex: 0
-  isBuiltOn: 0
+  cellRenderer: {fileID: 2047574168034919241}
+  cellCollider: {fileID: 2047574168034919244}
+  cellSize: {x: 7, y: 7}
+  index: 0
+  layer: 0

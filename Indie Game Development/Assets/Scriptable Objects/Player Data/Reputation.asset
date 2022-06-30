@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e46ab76237f6102499627f4d1d8e7a49, type: 3}
+  m_Name: Reputation
+  m_EditorClassIdentifier: 
+  _currentLevelIndex: 0
+  _totalExperience: 0
+  _allLevels:
+  - experienceNeeded: 0
+    unlockables:
+    - {fileID: 11400000, guid: 88eb4fd5f45085643af6a184a4a33d70, type: 2}
+  - experienceNeeded: 100
+    unlockables:
+    - {fileID: 11400000, guid: 92899b8ba0fee4e4cb341a7dc48e2176, type: 2}
+  - experienceNeeded: 200
+    unlockables:
+    - {fileID: 11400000, guid: ca8b4c85b68991f49abc5f1100861690, type: 2}
+  - experienceNeeded: 300
+    unlockables: []
+  - experienceNeeded: 400
+    unlockables: []

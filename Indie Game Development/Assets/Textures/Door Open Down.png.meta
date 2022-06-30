@@ -61,7 +61,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 384
+  spritePixelsToUnits: 336
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -135,7 +135,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 96
+        width: 48
         height: 144
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -154,9 +154,9 @@ TextureImporter:
       name: Door Open Down_1
       rect:
         serializedVersion: 2
-        x: 96
+        x: 48
         y: 0
-        width: 96
+        width: 48
         height: 144
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -175,9 +175,9 @@ TextureImporter:
       name: Door Open Down_2
       rect:
         serializedVersion: 2
-        x: 192
+        x: 96
         y: 0
-        width: 96
+        width: 48
         height: 144
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -196,9 +196,9 @@ TextureImporter:
       name: Door Open Down_3
       rect:
         serializedVersion: 2
-        x: 288
+        x: 144
         y: 0
-        width: 96
+        width: 48
         height: 144
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -217,9 +217,9 @@ TextureImporter:
       name: Door Open Down_4
       rect:
         serializedVersion: 2
-        x: 384
+        x: 192
         y: 0
-        width: 96
+        width: 48
         height: 144
       alignment: 0
       pivot: {x: 0, y: 0}

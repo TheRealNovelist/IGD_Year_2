@@ -46,9 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _floorId: 0
   cellPrefab: {fileID: 2047574168034919240, guid: 5fa1261bba01b7b4ba94c6ab0439966c, type: 3}
-  corridor: {fileID: 4327495759439248373}
   allCells: []
-  allRooms: {fileID: 0}
 --- !u!1 &4267792302427841015
 GameObject:
   m_ObjectHideFlags: 0
@@ -59,7 +57,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5929718145716782629}
   - component: {fileID: 7457961204045594925}
-  - component: {fileID: 4327495759439248373}
   m_Layer: 0
   m_Name: Cobblestone
   m_TagString: Untagged
@@ -118,29 +115,17 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1879436787
+  m_SortingLayer: -4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 10703f67b63e4044c8c78cc1af4dae54, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0891440a9016b504697e5e49b2d08b8e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 2
+  m_DrawMode: 0
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
+  m_SpriteTileMode: 1
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4327495759439248373
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4267792302427841015}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12c7da49cd3663f4597de0faa19c0f31, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

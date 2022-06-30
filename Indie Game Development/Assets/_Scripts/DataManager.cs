@@ -38,13 +38,13 @@ public class DataManager : MonoBehaviour
     
     public void GetData(PlayerData data)
     {
-        _reputation.RetrieveData(out data.level, out data.experience);
-        data.money = _money.GetCurrentMoney();
+        _reputation.RetrieveData(out data.Level, out data.Experience);
+        data.Money = _money.GetCurrentMoney();
     }
 
     public void SetData(PlayerData data)
     {
-        _reputation.LoadReputation(data.level, data.experience);
+        _reputation.LoadReputation(data.Level, data.Experience);
     }
 
     [Button]
@@ -77,8 +77,8 @@ public class DataManager : MonoBehaviour
 
 public class PlayerData
 {
-    public int level;
-    public int experience;
+    public int Level;
+    public int Experience;
 
-    public int money;
+    public int Money;
 }

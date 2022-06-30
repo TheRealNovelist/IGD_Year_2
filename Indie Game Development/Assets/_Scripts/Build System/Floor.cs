@@ -19,7 +19,6 @@ public class Floor : MonoBehaviour
     [SerializeField] private int _floorId = 0;
 
     [SerializeField] private GameObject cellPrefab;
-    [SerializeField] private Corridor corridor;
 
     [SerializeField] private List<Cell> allCells; //Storing all reference for activating grid
 
@@ -39,8 +38,6 @@ public class Floor : MonoBehaviour
         GameObject upperLayer = new GameObject("Upper Cell Layer")  { transform = { position = floorPosition, parent = floorTransform}};
         GameObject lowerLayer = new GameObject("Lower Cell Layer")  { transform = { position = floorPosition, parent = floorTransform}};
 
-        corridor.SetCorridorSize(floorLength);
-        
         for (int i = 0; i < floorLength; i++)
         {
             ConstructCell(i, 1, upperLayer);
